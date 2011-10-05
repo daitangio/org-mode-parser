@@ -1,8 +1,9 @@
 * TODO Test Node 1
 Test file
-Total nodes: 7
+Total nodes: 10
 This a TODO Node
-#+STARTUP: indent
+Do not touch the body of Section 3 because it is used in the test
+Also the SEQ_TODO right here is used on the test
 #+STARTUP: showstars
 #+STARTUP: showall
 #+SEQ_TODO: TODO(t) STARTED(s) WAITING(w) DONE(d) CANCELLED(c) 
@@ -10,6 +11,26 @@ This a TODO Node
 :PROPERTIES:
 :okIamHard:for sure
 :END:
+* Section 3 with SCHEDULED
+SCHEDULED: <2011-12-31 Sat>
+This section has a schedule for the end of 2012, a very bad date someone said.
+Trust no one
+* Section 4 with a deadline
+DEADLINE: <2011-04-23 Tue>
+I have a deadline on Giovanni Giorgi Birth date
+* Section 5 with schedule and deadline too
+DEADLINE: <2011-11-30 Wed> SCHEDULED: <2011-11-01 Tue>
+* Section 6 with a lot of bad stuff inside it :tagged:withMoreThenOneTag:yeah
+  DEADLINE: <2111-10-04 Tue> SCHEDULED: <2011-11-30 Wed>
+  CLOCK: [2011-10-04 Tue 16:08]--[2011-10-04 Tue 16:09] =>  0:01
+This node is used to stress the parsing algorithm with a very complex node
+to validate. This node has plenty of stuff inside and will likely stress the entire
+parsing procedure as well.
+It has also a 'clock' entry. The clock entry is used for measuting time taken dealing with this entry
+and could also be 'truncated' like in the section below
+* Section 7 is like section 6 but only with a starting CLOCK
+  CLOCK: [2011-10-04 Tue 16:41]
+Text expected for Section 7
 * Test Tree                                                   :test:testRoot:
 ** Unit Test Subtree Section 		       :test:eventsLits:testTreeRoot:
 :PROPERTIES:
@@ -17,7 +38,6 @@ This a TODO Node
 :END:
 Questa è una sezione di test. per il test di subtree
 Fa anche il test di non visibilità properties nel body
-
 *** Tree1 senza figli 						  :testTree1:
 Test di SubTree1 che non ha figli
 *** Tree2 con un figlio 					  :testTree2:

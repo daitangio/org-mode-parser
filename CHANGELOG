@@ -4,3 +4,8 @@
 	org-mode-parser/test/parserTest.js:
 	First Revision
 
+2011-10-05 11:35 +0200  Giovanni Giorgi on VM  <jj@gioorgi.com>  (337d47418d7f [ORG_MODE_PARSER_0.0.2])
+
+	* org-mode-parser/package.json:
+	Typo fix
+

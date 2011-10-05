@@ -14,3 +14,4 @@ node tester.js || echo "FAILED"
 cd $cdir
 pwd
 rm -rf $tempdir
+rm $(find . -name "*~")

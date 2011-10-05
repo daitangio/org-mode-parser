@@ -14,6 +14,27 @@ orgParser.makelist("README.org", function (nodelist){
 #+END_SRC
 In the line [[(putyourcode)]] you are free to process the nodes in order.
 
+* API
+The main entry point is the makelist function, which accept a filename and a callback function.
+makelist() will pass to the function the list of parsed nodes as first parameter
+
+
+* RELEASE NOTES
+** ORG_MODE_PARSER_0.0.1 :published:
+First revision
+** ORG_MODE_PARSER_0.0.2 :dev:
+  1) SCHEDULE,DEADLINE and CLOCK directives now are correctly parsed
+  2) Added a performance watchdog to track slowdowns
+  3) Added the ability to return performance data via makelist
+  4) Started restructuring parser for better performance.
+  5) Minor API Change: null is the default value for tag,priority,scheduled, deadline 
+     when not set.
+     e.tags.existingtag is true if existingtag is there.
+     Anyway is better to use 
+       "existingtag" in e.tags
+     which is a better syntax
+
+
 #+TITLE:     README.org
 #+AUTHOR:    Giovanni Giorgi
 #+EMAIL:     jj@gioorgi.com

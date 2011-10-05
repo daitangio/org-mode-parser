@@ -1,20 +1,18 @@
 {
     "name": "org-mode-parser",
-    "description": "A parser for the Emacs org-mode package. http://orgmode.org/ Org-mode is for keeping notes, maintaining ToDo lists, doing project planning, and authoring with a fast and effective plain-text system.",
+    "description": "A parser for the Emacs org-mode package. http://orgmode.org/ This version adds support for SCHEDULEs AND DEADLINEs",
     "homepage": "http://gioorgi.com/org-mode-parser",
     "keywords": ["parser","util","org-mode","orgmode","emacs"],
     "author": "Giovanni Giorgi <jj@gioorgi.com>",
     "contributors" : [],    
     "main":"./lib/org-mode-parser",
-    "version": "0.0.1",
+    "version": "0.0.2",
 
     "directories" : { "test": "./test" },
     "scripts": {
 	"test": "vows --spec -v test/*.js"
     },
-    "repository": {
-	"url": ""
-    },
+    "repository"    : {"type": "git", "url": "git://github.com/daitangio/org-mode-parser.git"},  
 
     "engines":{"node":">=0.4.12"},
     "dependencies": {    
