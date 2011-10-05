@@ -4,6 +4,12 @@ var vows = require('vows'),
 
 var orgParser=require("../lib/org-mode-parser");
 
+// To understand how the parser works, uncomment the following:
+// orgParser.enableDebug();
+
+// The temp file used for some performance tests...
+var tempFileName="./test/bigTestFile.org.tmp";
+
 // Create a Test Suite
 vows.describe('OrgMode Tests').addBatch({
     'basicLibraries':{
@@ -78,7 +84,7 @@ vows.describe('OrgMode Tests').addBatch({
 		assert.equal(q[2],'c');	
 	    },
 	    'Orgnode object':function(){
-		console.dir(new orgParser.Orgnode("*", "Test", "", undefined, undefined));
+		new orgParser.Orgnode("*", "Test", "", undefined, undefined);
 	    },
 	    'Orgnode direct accessors':function(){
 		var n=new orgParser.Orgnode("*", "Test", "", undefined, undefined);
@@ -98,6 +104,30 @@ vows.describe('OrgMode Tests').addBatch({
 	    'parse function of one header with body':function(){
 		var n=orgParser.parseBigString("* Very Stupid\nData Line1");		
 		assert.equal(n[0].body,"Data Line1\n");
+	    },
+	    'null is the default value for tag,priority,scheduled, deadline when not set.': function(){
+		var e=orgParser.parseBigString("* Less Stupid\nData Line1")[0];
+		assert.isNull(e.tag);
+		assert.isNull(e.priority);		
+		assert.isNull(e.scheduled);		
+		assert.isNull(e.deadline);		
+	    },
+	    'empty is the default for tags when no tags set':function(){
+		var e=orgParser.parseBigString("* Less Stupid\nData Line1")[0];
+		assert.isEmpty(e.tags);
+	    },
+	    'tags are coerched to true':function(){
+		var e=orgParser.parseBigString("* Less Stupid :monotag:\nData Line1")[0];
+		assert.isNotEmpty(e.tags);
+		assert.isNotNull(e.tags.monotag);
+
+		assert.isTrue("monotag" in e.tags);
+		// Slight non-obious api
+		if(!e.tags.monotag){
+		    throw new Error("Tags are coerced to false in the if");		    
+		}else{
+		    assert.isTrue(e.tags.monotag);
+		}
 	    },
 	    'tag parsing of first tag':function(){
 		var n=orgParser.parseBigString(
@@ -139,13 +169,13 @@ vows.describe('OrgMode Tests').addBatch({
 		assert.isNotNull(n1.body.match(/line/g));
 	    }
 	},
-	'End to end simple parsing':{
+	'End to end Simple Parsing':{
 	    topic: function (){
 		orgParser.makelist("./test/treeLevel.org",this.callback);
 	    },
 	    'three node parser is right':function(n,unused){
 		//console.dir(n);
-		assert.equal(n.length, 3);
+		assert.equal(n.length, 4);
 	    },
 	    'headers are right':function(n,u){
 		assert.equal(n[0].headline,"Level one");
@@ -170,7 +200,7 @@ vows.describe('OrgMode Tests').addBatch({
 	    },
 
 	    'nodes parsing count is right':function(nodeList,u){		
-		assert.equal(7,nodeList.length);
+		assert.equal(12,nodeList.length);
 	    },
 	    'first node heading is right':function(nodeList,u){
 		assert.equal(nodeList[0].headline,"Test Node 1");
@@ -187,7 +217,75 @@ vows.describe('OrgMode Tests').addBatch({
 		assert.equal(n.priority,"B");
 		assert.equal(n.tag,"veryHard");
 		assert.equal(n.properties['okIamHard'],'for sure');
+	    },
+	    'Node 3 is scheduled':function(nl,u){
+		assert.equal(nl[2].headline,"Section 3 with SCHEDULED");
+		assert.isNotNull(nl[2].scheduled);
+	    },
+	    'Node 4 has deadline':function (nl,u){
+		assert.isNotNull(nl[3].deadline);
+	    },
+	    'Node 5 has deadline and schedule':function (nl,u){
+		assert.equal(nl[4].headline,"Section 5 with schedule and deadline too");
+		assert.isNotNull(nl[4].schedule);
+		assert.isNotNull(nl[4].deadline);
+	    },
+	    'Node 3 body is right':function(nl,u){
+		assert.equal(nl[2].headline,"Section 3 with SCHEDULED");
+		assert.equal(nl[2].body,"This section has a schedule for the end of 2012, a very bad date someone said.\nTrust no one\n");
+	    },
+	    'CLOCK: FULL directive is ignored':function(nl,u){
+		 assert.equal(nl[5].headline,"Section 6 with a lot of bad stuff inside it");
+		 //console.dir(nl[5].body);
+		 assert.isNull(nl[5].body.match('CLOCK'));
+	    },
+	    'CLOCK: Partial directive is ignored':function(nl,u){
+		 assert.equal(nl[6].headline,"Section 7 is like section 6 but only with a starting CLOCK");
+		 //console.dir(nl[6].body);
+		 assert.isNull(nl[6].body.match('CLOCK'));
+	    },
+	    'Heading and subheading level works as expected':function(nodeList,u){
+		var l1=nodeList.length-5;
+		var n1=nodeList[l1];
+		assert.equal(n1.headline,"Test Tree");
+		assert.equal(n1.level,1);
+		assert.equal(nodeList[l1+1].level,2);
+		assert.equal(nodeList[l1+2].level,3);
+		
+		assert.equal(nodeList[l1+3].headline,"Tree2 con un figlio");
+		assert.equal(nodeList[l1+3].level,3);
+		
+		// Last subtree
+		assert.equal(nodeList[l1+4].level,4);
 	    }
+	    
+	},
+	'Simple Performance Testing':{
+	    topic: function(){
+		
+		var fs=require('fs');
+		var stuffToDuplicate=fs.readFileSync("./test/treeLevel.org",'utf-8');
+		var fd=fs.openSync(tempFileName, "w+");
+		for(var i=1; i<=9; i++){	
+		    //console.log(stuffToDuplicate);
+		    stuffToDuplicate +=stuffToDuplicate;
+		}
+		fs.writeSync(fd, stuffToDuplicate, 0, 'utf-8');
+		fs.closeSync(fd);
+		orgParser.makelistWithPerformance(tempFileName, this.callback);
+	    },
+
+	    'Huge file Loading':function(nodelist,performance){		    
+		/** Examples with max i= 15 we got
+		    msPerNode: 0.09316...
+		 */
+		console.dir(performance);
+		console.log("");
+		assert.isTrue(performance.msPerNode<0.095);
+		var fs=require('fs');
+		fs.unlink(tempFileName);
+	    }
+	    
 	}
 	
 	} //basic
