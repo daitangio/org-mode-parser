@@ -1,0 +1,27 @@
+* TODO Test Node 1
+Test file
+Total nodes: 7
+This a TODO Node
+#+STARTUP: indent
+#+STARTUP: showstars
+#+STARTUP: showall
+#+SEQ_TODO: TODO(t) STARTED(s) WAITING(w) DONE(d) CANCELLED(c) 
+* STARTED [#B] Node With Priority B, a custom keyword and a tag :veryHard:
+:PROPERTIES:
+:okIamHard:for sure
+:END:
+* Test Tree                                                   :test:testRoot:
+** Unit Test Subtree Section 		       :test:eventsLits:testTreeRoot:
+:PROPERTIES:
+:nondevoapparireNelBody:yes
+:END:
+Questa è una sezione di test. per il test di subtree
+Fa anche il test di non visibilità properties nel body
+
+*** Tree1 senza figli 						  :testTree1:
+Test di SubTree1 che non ha figli
+*** Tree2 con un figlio 					  :testTree2:
+Test di SubTree2 che ha un figlio
+**** SubTree di Tree2				      :testTree2:testTree2_1:
+
+
