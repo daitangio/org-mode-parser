@@ -309,19 +309,19 @@ vows.describe('OrgMode Tests').addBatch({
 		/** Examples with max i= 15 we got
 		    msPerNode: 0.09316...
 		 */
-		//console.dir(performance);
+		console.dir(performance);
 		//console.log("");
-		assert.isTrue(performance.msPerNode<0.095);
+		assert.isTrue(performance.nodesPerSeconds>15000);
 		var fs=require('fs');
 		fs.unlink(tempFileName);
 	    }
 	    
 	},
-	'OrgFileDescriptor':{
+	'OrgQuery':{
 	    topic: function (){
 		var thisOfTest=this;
 		orgParser.makelist("./test/treeLevel.org",function(nodes){
-			var ofd=new orgParser.OrgFileDescriptor(nodes);
+			var ofd=new orgParser.OrgQuery(nodes);
 			thisOfTest.callback(ofd, nodes);
 		});
 	    },
@@ -336,7 +336,7 @@ vows.describe('OrgMode Tests').addBatch({
 		assert.equal(subtreeN1.length,2);
 		assert.equal(ofd.selectSubtree(nodes[1]).length,1);
 	    },
-	    'subtree returns an OrgFileDescriptor ':function(ofd,nodes){
+	    'subtree returns an OrgQuery ':function(ofd,nodes){
 		var subtree=ofd.selectSubtree(nodes[0]);
 		var levelTwo=subtree.allNodes[0];		
 		assert.equal(levelTwo.headline,"Level two");
@@ -357,11 +357,11 @@ vows.describe('OrgMode Tests').addBatch({
 	    }
 
 	},
-	'OrgFileDescriptor-Complex':{
+	'OrgQuery-Complex':{
 	    topic: function (){
 		var thisOfTest=this;
 		orgParser.makelist("./test/treeLevelComplex.org",function(nodes){
-			var ofd=new orgParser.OrgFileDescriptor(nodes);
+			var ofd=new orgParser.OrgQuery(nodes);
 			thisOfTest.callback(ofd, nodes);
 		});
 	    },
@@ -385,7 +385,7 @@ vows.describe('OrgMode Tests').addBatch({
 		var expectedSize=ofd.length;
 		var reparsed=orgParser.parseBigString(str);
 		assert.equal(reparsed.length,expectedSize);
-		var ofdReparsed=new orgParser.OrgFileDescriptor(reparsed);
+		var ofdReparsed=new orgParser.OrgQuery(reparsed);
 		assert.equal(ofdReparsed.toOrgString(),str);
 	    }
 	}	

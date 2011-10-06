@@ -1,7 +1,8 @@
 
-A Nodejs org mode parser module
+* A Nodejs org mode parser module
 
 Usage example:
+#<<opening Example>>
 # Look  http://orgmode.org/manual/Code-block-specific-header-arguments.html
 # for the syntax, anyway org-babel-tangle
 # will export this soruce
@@ -16,24 +17,51 @@ In the line [[(putyourcode)]] you are free to process the nodes in order.
 
 * API
 The main entry point is the makelist function, which accept a filename and a callback function.
-makelist() will pass to the function the list of parsed nodes as first parameter
+makelist() will pass to the function the list of parsed nodes as first parameter, as described in the [[openening Example]]
 
-You can optionally build a query object called OrgFileDescriptor to easily select subtree,
-searching tags, et cetera.
+You can optionally build a query object called OrgQuery to easily select subtree,
+searching tags, et cetera:
+
+#+BEGIN_SRC javascript -n -r
+orgParser.makelist("./test/treeLevel.org",function(nodes){
+	var ofd=new orgParser.OrgQuery(nodes);
+	//  ofd is a complex object wiith let you do query and so on
+});
+#+END_SRC
+
+See the unit test section 'basicLibraries OrgQuery-Complex' on test/parseTest.js for more usage examples
+
+* Design Goals
+
+ 1. API Stability:
+    In general, every API described in the [[API]] section is here to stay. 
+    Compatibility will be retained as much as possible.
+ 2. Performance
+    At the time of writing, the parser is pretty fast. On a Linux virtualized machine, we get about 20.000 nodes per seconds.
+    We will keep an eye on performance.
+    Please help us to stress the parser and find its true limit.
+ 3. Minimize dependency
+    Org-mode-parser depends only on two packages, underscore ad vows. Vows dependency is used only 
+    for regression tests, so the parser really depends only on underscore.
+ 4. Tests are documentation.
+    Please look at test/parserTest.js file for usage example.
+    Tests are commenteted and pretty self explanatory
+
+
 
 * RELEASE NOTES
-** ORG_MODE_PARSER_0.0.3
+** ORG_MODE_PARSER_0.0.3   :published:
   1) Added the ability to regenerate the Orgnode as string using the method
      toOrgString()
      Be carefully, the method is still experimental and do not emit:
       a) Comments
       b) SCHEDULE,DEADLINE and CLOCK directive
-  2) Added the OrgFileDescriptor object, for doing queries like 
+  2) Added the OrgQuery object, for doing queries like 
      + subtree extraction with .selectSubtree
      + tag-based searches with selectTag   
-Even if the OrgFileDescriptor try to play nice, it is not yet an array, so
+Even if the OrgQuery try to play nice, it is not yet an array, so
 avoid using it directly with _.each(...)
-See the unit test section 'basicLibraries OrgFileDescriptor-Complex'
+
 
 *** KNOWN LIMITATIONS
   1) Comments are stripped off during parsing.
@@ -62,13 +90,18 @@ See the unit test section 'basicLibraries OrgFileDescriptor-Complex'
 First revision
 
 * Release command sequence
-At the time of writing, git repository is used only for storing major tag revisions.
-I have a private mercurial repository for my changest, because I am more confortable with mercurial.
+At the time of writing, the github repository is the master code repository
 
+1. Check the package.json version
+2. Issue the following commands:
+#+BEGIN_SRC shell
 ./bin/testInstall.sh
-hg tag ORG_MODE_PARSER_0.0.3
+git commit -m "Testing install" .
+git tag -a "Delivered tag revision ORG_MODE_PARSER_0.0.3"
+git push --tag
 npm publish
-bin/releaseVersion.sh  ORG_MODE_PARSER_0.0.3
+#+END_SRC
+
 
 #Config
 #+TITLE:     README.org

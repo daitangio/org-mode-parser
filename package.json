@@ -1,6 +1,6 @@
 {
     "name": "org-mode-parser",
-    "description": "A parser for the Emacs org-mode package. http://orgmode.org/ This version adds support for SCHEDULEs AND DEADLINEs",
+    "description": "A parser for the Emacs org-mode package. This version adds support for querying",
     "homepage": "http://gioorgi.com/org-mode-parser",
     "keywords": ["parser","util","org-mode","orgmode","emacs"],
     "author": "Giovanni Giorgi <jj@gioorgi.com>",
