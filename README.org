@@ -10,7 +10,7 @@ and exporting it in html, latex, pdf and so on
 I was unable to find a JavaScript parser for org-mode. Now we have one.
 Org-mode is so useful you will start writing your data in org-mode instead of text files or firing your sqlite-db for everything
 need a bit of structuring.
-It is also "XML-free" :)
+It is also _XML-free_ and yes, we like it  :)
 
 ** what are its key benefits?
 A lot of unit testing (over 60) and a pretty fast parser (see below).
@@ -67,17 +67,17 @@ Parser can detect some corruptions, but it is not provided a specific sanity che
 
 * Design Goals
 
- 1. API Stability:
+** API Stability
     In general, every API described in the [[API]] section is here to stay. 
     Compatibility will be retained as much as possible in the future releases.
- 2. Performance
+** Performance
     At the time of writing, the parser is pretty fast. On a Linux virtualized machine, we get about 20.000 nodes per seconds.
     We will keep an eye on performance.
     Please help us to stress the parser and find its true limit.
- 3. Minimize dependency
+** Minimize dependency
     Org-mode-parser depends only on two packages, underscore ad vows. Vows dependency is used only 
     for regression tests, so the parser really depends only on underscore.
- 4. Tests are documentation.
+** Tests are documentation.
     Please look at test/parserTest.js file for usage example.
     Tests are commenteted and pretty self explanatory
 
@@ -94,7 +94,7 @@ Parser can detect some corruptions, but it is not provided a specific sanity che
  2) :PROPERTIES: without :END: generates an error now.
     The parser is quite weak, but can detect this simple case.
 BUGFIXES:
- + OrgQuery had a bug, and collected nodes could not be unique in some rara situations.
+ + OrgQuery had a bug, and collected nodes could not be unique in some rare situations.
    Now we relay on underscore library for generating unique id
  + A set of stronger guards on constructors
     
