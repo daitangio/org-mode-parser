@@ -84,10 +84,10 @@ vows.describe('OrgMode Tests').addBatch({
 		assert.equal(q[2],'c');	
 	    },
 	    'Orgnode object':function(){
-		new orgParser.Orgnode(1,"*", "Test", "", undefined, undefined);
+		new orgParser.Orgnode("*", "Test", "", undefined, undefined);
 	    },
 	    'Orgnode direct accessors':function(){
-		var n=new orgParser.Orgnode(2,"*", "Test", "", undefined, undefined);
+		var n=new orgParser.Orgnode("*", "Test", "", undefined, undefined);
 		var ptest={
 		    a:1
 		};		
@@ -143,6 +143,12 @@ vows.describe('OrgMode Tests').addBatch({
 		);
 		//console.dir(n);
 		assert.isTrue("testRoot" in n[0].tags);
+	    },
+	    'bastard tag parsing works':function(){
+		var n=orgParser.parseBigString("* Quiz DB :noexport:webintro:")[0];
+		assert.equal(n.tags['noexport'],true);
+		
+
 	    },
 	    'parser ignore comments':function(){
 		var n1=orgParser.parseBigString(
@@ -314,7 +320,8 @@ vows.describe('OrgMode Tests').addBatch({
 		assert.isTrue(performance.nodesPerSeconds>15000);
 		var fs=require('fs');
 		fs.unlink(tempFileName);
-	    }
+	    },
+	    
 	    
 	},
 	'OrgQuery':{
@@ -354,6 +361,14 @@ vows.describe('OrgMode Tests').addBatch({
 		assert.equal(queryResult.length,2);
 		assert.equal(queryResult.allNodes[0].headline,'Level one');
 		assert.equal(queryResult.allNodes[1].headline,'This is a huge node with a lot of data and tags');
+	    },
+	    'each works':function(ofd,nodes){
+		var titles=[];
+		ofd.selectTag('data').each(function f(elem){
+		    titles.push(elem.headline);
+		});
+		assert.equal(titles[0],'Level one');
+		assert.equal(titles[1],'Level three');
 	    }
 
 	},
@@ -370,9 +385,9 @@ vows.describe('OrgMode Tests').addBatch({
 		var headersToTest=nodes[0].properties["headersToTest"];
 		assert.equal(nodesWithMeta.length, headersToTest);
 		//console.dir(nodesWithMeta.first());
-		// WARN: nodesWithMeta is NOT AN ARRAY (yet) so you must iterate on allNodes
-		// property
-		_.each(nodesWithMeta.allNodes, function(n){		    
+		// WARN: nodesWithMeta is NOT AN ARRAY (yet) so you must use
+		// this syntax or the provided each() method...
+		_.each(nodesWithMeta.toArray(), function(n){		    
 		    var expectedData=n.properties["expected-sub-levels"];
 		    //console.log("? "+expectedData+" For "+n.headline);
 		    //console.dir(ofd.selectSubtree(n));
@@ -388,10 +403,116 @@ vows.describe('OrgMode Tests').addBatch({
 		var ofdReparsed=new orgParser.OrgQuery(reparsed);
 		assert.equal(ofdReparsed.toOrgString(),str);
 	    }
-	}	
-
+	    //'test ordering':function(ofd,nodes)
+	},
+	'OrgQuery-sorting and rejecting':{
+	    'sorting':function(){
+		var ofd=new orgParser.OrgQuery(
+		    orgParser.parseBigString("* 2\n* 1\n* 8"));
+		var sorted=
+		    ofd.sortBy(function (n){ return n.headline;}).toArray();
+		assert.equal(sorted[0].headline,"1");
+		assert.equal(sorted[2].headline,"8");
+	    },
+	    'rejecting':function(){
+		orgParser.makelist("./test/treeLevel.org",function(nodes){
+		    var ofd=new orgParser.OrgQuery(nodes);
+		    var newCollection=ofd.reject(function (n){
+			return n.level!==3;
+		    });
+		    var n1=newCollection.toArray()[0];
+		    assert.equal(n1.headline,"Level three");
+		});
+	    },
+	    'rejectTag':function(){
+		orgParser.makelist("./test/treeLevel.org",function(nodes){
+		    var ofd=new orgParser.OrgQuery(nodes);
+		    var firstHeader=ofd.rejectTag('complex').rejectTag('last').rejectTag('nodata');
+		    assert.equal(firstHeader.length,1);
+		    assert.equal(firstHeader.first().headline,"Level one");
+		});
+	    },
+	    'random test 1':function(){
+		orgParser.makelist("./test/treeLevel.org",function(nodes){
+		    var ofd=new orgParser.OrgQuery([ nodes[0] ]);
+		    //console.dir(ofd.random());
+		    assert.equal(ofd.random().key,nodes[0].key);
+		});
+	    },
+	    'random test 2':function(){
+		orgParser.makelist("./test/treeLevel.org",function(nodes){
+		    var ofd=new orgParser.OrgQuery([ nodes[0], nodes[1] ]);
+		    var collector={};
+		    // Given 2 value, the probability x launch will get only one of them is
+		    // (1/2)^x
+		    // so for a 99% prob we catch all...
+		    // (1-(1/4096))*100
+		    // x=12
+		    _.each(_.range(12),function(){
+			var r=ofd.random();
+			collector[r.key]=r;
+		    });
+		    //console.dir(_.toArray(collector));
+		    assert.equal(ofd.length,_.toArray(collector).length);
+		});
+	    },
+	    'random test 3':function(){
+		// Given 1000 values the probability two launch give the same value is
+		// 1/10000  i.e.  0,01%
+		rList=[];
+		_.each(_.range(10000), function (fakeNumber){
+			rList.push(
+				new orgParser.Orgnode("*", "Test "+fakeNumber, 
+				"", undefined, undefined));
+		});
+		var ofd=new orgParser.OrgQuery( rList );
+		var collector={};
+		_.each(_.range(2),function(){
+		    var r=ofd.random();
+		    collector[r.key]=r;
+		});
+		assert.equal(_.toArray(collector).length,2);
+	    }	
+	}
 
 	
 	} //basic
 }).export(module); // Export it
 
+vows.describe('OrgMode BUGS').addBatch({
+    '0.0.3 BUGS':{    
+	'key is not always unique on leaf nodes': function(){
+	    var n=orgParser.parseBigString(
+		"* Key test\nData Line1\nData Line2\n* Header 2\nData Line of header2\n* Header 3");
+	    console.dir(n);
+	    keyCollection={};
+	    _.each(n,function(elem){
+		    keyCollection[elem.key]=true;
+	    });
+	    assert.equal(_.toArray(keyCollection).length,n.length);
+	},
+	'keys must be unique even with different sources':function (){
+	    var n1=orgParser.parseBigString(
+		"* Key test\nData Line1\nData Line2\n* Header 2\nData Line of header2\n* Header 3");
+	    var n2=orgParser.parseBigString(
+		"* Key test\nData Line1\nData Line2\n* Header 2\nData Line of header2\n* Header 3");
+	    keyCollection={};
+	    //console.dir(n1);
+	    //console.dir(n2);
+	    _.each(n1,function(elem){
+		    keyCollection[elem.key]=true;
+	    });
+	    _.each(n2,function(elem){
+		    keyCollection[elem.key]=true;
+	    });
+	    assert.equal(_.toArray(keyCollection).length,(n1.length+n2.length));
+	    
+	},
+	'Orgnode constructor validate parameters/1':function(){
+	    assert.throws(function(){
+			      new orgParser.Orgnode("firstExtraParam","*", "Test", "", undefined, undefined);
+			  },Error);
+	   
+	}
+    }
+}).export(module);

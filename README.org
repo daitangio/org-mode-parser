@@ -29,7 +29,20 @@ orgParser.makelist("./test/treeLevel.org",function(nodes){
 });
 #+END_SRC
 
-See the unit test section 'basicLibraries OrgQuery-Complex' on test/parseTest.js for more usage examples
+Supporte methods of OrgQuery are:
+ + selectSubtree(node)
+   Extract the nodes hierarchically below the given input
+ + selectTag(tagString)
+ + sortBy
+ + reject(function)
+ + rejectTag(tagName)
+ + toArray()
+ + each(functionToPassEach)
+ + random()
+   Extract a random element
+
+See the unit test section 'basicLibraries OrgQuery-Complex' on test/parseTest.js 
+for more usage examples
 
 * Design Goals
 
@@ -50,6 +63,16 @@ See the unit test section 'basicLibraries OrgQuery-Complex' on test/parseTest.js
 
 
 * RELEASE NOTES
+** ORG_MODE_PARSER_0.0.4 :dev:
+ 1) Added new OrgQuery methods: 
+    1. sortBy
+    2. reject
+    3. toArray
+    4. each
+BUGFIXES:
+ + OrgQuery had a bug, and collected nodes could not be unique.
+    
+
 ** ORG_MODE_PARSER_0.0.3   :published:
   1) Added the ability to regenerate the Orgnode as string using the method
      toOrgString()
@@ -97,8 +120,9 @@ At the time of writing, the github repository is the master code repository
 #+BEGIN_SRC shell
 ./bin/testInstall.sh
 git commit -m "Testing install" .
-git tag -a "Delivered tag revision ORG_MODE_PARSER_0.0.3"
+git tag -a -m "Delivered tag revision ORG_MODE_PARSER_0.0.3" ORG_MODE_PARSER_0.0.3
 git push --tag
+git push
 npm publish
 #+END_SRC
 
