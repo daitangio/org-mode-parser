@@ -1,0 +1,20 @@
+* Subtree brothers test                                :has:sublevel:property:
+:PROPERTIES:
+:expected-sub-levels:4
+:headersToTest:3
+:END:
+** I am at level2
+** I am too at level2                                  :has:sublevel:property:
+:PROPERTIES:
+:expected-sub-levels:1
+:END:
+*** I am at level3
+** I am again at level 2
+* I am a new level 1    :has:sublevel:property:
+  :PROPERTIES:
+  :expected-sub-levels: 3
+  :END:
+  Be careful because you do not need to have correct sequences in subheadings.
+*** Head 3 Right now
+**** Head 4
+** Crazy Head 2

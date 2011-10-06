@@ -4,11 +4,18 @@ with data
 ** Level two :nodata:
 *** Level three :data:last:
     This level with some text
-* TODO This is a huge node with a lot of data
+* TODO This is a huge node with a lot of data and tags :complex:1:
   DEADLINE: <2111-10-04 Tue> SCHEDULED: <2011-11-30 Wed>
   CLOCK: [2011-10-04 Tue 16:08]--[2011-10-04 Tue 16:09] =>  0:01
+  :PROPERTIES:
+  :property1: value1
+  :END:
 This node is used to stress the parsing algorithm with a very complex node
 to deal with. This node has plenty of stuff inside and will likely stress the entire
 parsing procedure as well.
-It has also a CLOCK entry used for measuting time taken dealing with this entry
+It has:
+ + some properties 
+ + a CLOCK entry used for measuting time taken dealing with this entry
+ + a bullet list (you are reading it)
+
 

@@ -18,11 +18,36 @@ In the line [[(putyourcode)]] you are free to process the nodes in order.
 The main entry point is the makelist function, which accept a filename and a callback function.
 makelist() will pass to the function the list of parsed nodes as first parameter
 
+You can optionally build a query object called OrgFileDescriptor to easily select subtree,
+searching tags, et cetera.
 
 * RELEASE NOTES
-** ORG_MODE_PARSER_0.0.1 :published:
-First revision
-** ORG_MODE_PARSER_0.0.2 :dev:
+** ORG_MODE_PARSER_0.0.3
+  1) Added the ability to regenerate the Orgnode as string using the method
+     toOrgString()
+     Be carefully, the method is still experimental and do not emit:
+      a) Comments
+      b) SCHEDULE,DEADLINE and CLOCK directive
+  2) Added the OrgFileDescriptor object, for doing queries like 
+     + subtree extraction with .selectSubtree
+     + tag-based searches with selectTag   
+Even if the OrgFileDescriptor try to play nice, it is not yet an array, so
+avoid using it directly with _.each(...)
+See the unit test section 'basicLibraries OrgFileDescriptor-Complex'
+
+*** KNOWN LIMITATIONS
+  1) Comments are stripped off during parsing.
+  2) Special directive starting with '#+' are mostly ignored during the parsing, 
+     for instance #+AUTHOR etc
+  3) Tables are not parsed at all. 
+  4) In org-mode tags cannot have "-" character in name. They are split in subwords. 
+     The parser allow this instead, so be careful when editing by hand org files.
+  5) properties can have "-" but this will force 
+     you to access them with the array syntax instead of the dot notation, so we
+     strongly suggest to avoid "-" and special java character in property names.
+     Relay on "_", for instance.
+
+** ORG_MODE_PARSER_0.0.2 					  :published:
   1) SCHEDULE,DEADLINE and CLOCK directives now are correctly parsed
   2) Added a performance watchdog to track slowdowns
   3) Added the ability to return performance data via makelist
@@ -33,8 +58,19 @@ First revision
      Anyway is better to use 
        "existingtag" in e.tags
      which is a better syntax
+** ORG_MODE_PARSER_0.0.1					  :published:
+First revision
 
+* Release command sequence
+At the time of writing, git repository is used only for storing major tag revisions.
+I have a private mercurial repository for my changest, because I am more confortable with mercurial.
 
+./bin/testInstall.sh
+hg tag ORG_MODE_PARSER_0.0.3
+npm publish
+bin/releaseVersion.sh  ORG_MODE_PARSER_0.0.3
+
+#Config
 #+TITLE:     README.org
 #+AUTHOR:    Giovanni Giorgi
 #+EMAIL:     jj@gioorgi.com

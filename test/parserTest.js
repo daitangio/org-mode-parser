@@ -84,10 +84,10 @@ vows.describe('OrgMode Tests').addBatch({
 		assert.equal(q[2],'c');	
 	    },
 	    'Orgnode object':function(){
-		new orgParser.Orgnode("*", "Test", "", undefined, undefined);
+		new orgParser.Orgnode(1,"*", "Test", "", undefined, undefined);
 	    },
 	    'Orgnode direct accessors':function(){
-		var n=new orgParser.Orgnode("*", "Test", "", undefined, undefined);
+		var n=new orgParser.Orgnode(2,"*", "Test", "", undefined, undefined);
 		var ptest={
 		    a:1
 		};		
@@ -167,6 +167,38 @@ vows.describe('OrgMode Tests').addBatch({
 		// No simple proprerty in the body but...
 		assert.isNull(n1.body.match(/simple/g));
 		assert.isNotNull(n1.body.match(/line/g));
+	    },
+	    'test toOrgString heading simple case':function(){
+		var demoStuff=
+		    "** Test Tree                                                  :test:testRoot:\n"+
+		    "First line of Data\n";
+		var n=orgParser.parseBigString(demoStuff)[0];
+		assert.equal(n.toOrgString(),demoStuff);		
+	    },
+	    'test toOrgString heading with TODO':function(){
+		var demoStuff=
+		    "* TODO Test Tree                                              :test:testRoot:\n"+
+		    "First line of Data\n";
+		var n=orgParser.parseBigString(demoStuff)[0];
+		assert.equal(n.toOrgString(),demoStuff);		
+	    },
+	    'test toOrgString heading with TODO and priorities':function(){
+		var demoStuff=
+		    "*** TODO [#A] Test Tree                                       :test:testRoot:\n"+
+		    "First line of Data\n";
+		var n=orgParser.parseBigString(demoStuff)[0];
+		assert.equal(n.toOrgString(),demoStuff);		
+	    },
+
+	    'test toOrgString emits properties':function(){
+		var demoStuff=
+		    "** Test Tree                                                  :test:testRoot:\n"+
+		    ":PROPERTIES:\n"+
+		    ":simple:yes\n"+
+		    ":END:\n"+
+		    "First line of Data\n";
+		var n=orgParser.parseBigString(demoStuff)[0];
+		assert.equal(n.toOrgString(),demoStuff);		
 	    }
 	},
 	'End to end Simple Parsing':{
@@ -191,9 +223,7 @@ vows.describe('OrgMode Tests').addBatch({
 		assert.isTrue("last" in n[2].tags);
 	    }
 
-	}
-	
-	,
+	},
 	'End to end Parser':{
 	    topic: function(){
 		orgParser.makelist("./test/orgmodeTest.org", this.callback);
@@ -279,14 +309,88 @@ vows.describe('OrgMode Tests').addBatch({
 		/** Examples with max i= 15 we got
 		    msPerNode: 0.09316...
 		 */
-		console.dir(performance);
-		console.log("");
+		//console.dir(performance);
+		//console.log("");
 		assert.isTrue(performance.msPerNode<0.095);
 		var fs=require('fs');
 		fs.unlink(tempFileName);
 	    }
 	    
-	}
+	},
+	'OrgFileDescriptor':{
+	    topic: function (){
+		var thisOfTest=this;
+		orgParser.makelist("./test/treeLevel.org",function(nodes){
+			var ofd=new orgParser.OrgFileDescriptor(nodes);
+			thisOfTest.callback(ofd, nodes);
+		});
+	    },
+	    'subtree without params return all nodes':function(ofd,u){
+		assert.equal(ofd.selectSubtree().length,4);
+		assert.equal(ofd.selectSubtree(null).length,4);
+	    },
+	    'subtree works/1':function(ofd,nodes){
+		var n1=ofd.selectSubtree()[0];
+		var subtreeN1=ofd.selectSubtree(n1);
+		//console.dir(subtreeN1);
+		assert.equal(subtreeN1.length,2);
+		assert.equal(ofd.selectSubtree(nodes[1]).length,1);
+	    },
+	    'subtree returns an OrgFileDescriptor ':function(ofd,nodes){
+		var subtree=ofd.selectSubtree(nodes[0]);
+		var levelTwo=subtree.allNodes[0];		
+		assert.equal(levelTwo.headline,"Level two");
+		var monosubtreeLevel3=subtree.selectSubtree(levelTwo);
+		assert.equal(monosubtreeLevel3.length,1);
+	    },
+	    'selectTag works/1':function(ofd,nodes){
+		var queryResult=ofd.selectTag('data');
+		assert.equal(queryResult.length,2);
+		assert.equal(queryResult.allNodes[0].headline,'Level one');
+		assert.equal(queryResult.allNodes[1].headline,'Level three');
+	    },
+	    'selectTag works/2':function(ofd,nodes){
+		var queryResult=ofd.selectTag('1');
+		assert.equal(queryResult.length,2);
+		assert.equal(queryResult.allNodes[0].headline,'Level one');
+		assert.equal(queryResult.allNodes[1].headline,'This is a huge node with a lot of data and tags');
+	    }
+
+	},
+	'OrgFileDescriptor-Complex':{
+	    topic: function (){
+		var thisOfTest=this;
+		orgParser.makelist("./test/treeLevelComplex.org",function(nodes){
+			var ofd=new orgParser.OrgFileDescriptor(nodes);
+			thisOfTest.callback(ofd, nodes);
+		});
+	    },
+	    'test complex subtree':function(ofd,nodes){
+		var nodesWithMeta=ofd.selectTag('has').selectTag('sublevel').selectTag('property');
+		var headersToTest=nodes[0].properties["headersToTest"];
+		assert.equal(nodesWithMeta.length, headersToTest);
+		//console.dir(nodesWithMeta.first());
+		// WARN: nodesWithMeta is NOT AN ARRAY (yet) so you must iterate on allNodes
+		// property
+		_.each(nodesWithMeta.allNodes, function(n){		    
+		    var expectedData=n.properties["expected-sub-levels"];
+		    //console.log("? "+expectedData+" For "+n.headline);
+		    //console.dir(ofd.selectSubtree(n));
+		    assert.equal(ofd.selectSubtree(n).length,expectedData);
+		});
+	    },
+	    'test toOrgString with reparsing':function (ofd,nodes){
+		var str=ofd.toOrgString();
+		// Deadly test: we force eating its own dog food here
+		var expectedSize=ofd.length;
+		var reparsed=orgParser.parseBigString(str);
+		assert.equal(reparsed.length,expectedSize);
+		var ofdReparsed=new orgParser.OrgFileDescriptor(reparsed);
+		assert.equal(ofdReparsed.toOrgString(),str);
+	    }
+	}	
+
+
 	
 	} //basic
 }).export(module); // Export it
