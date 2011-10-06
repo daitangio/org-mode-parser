@@ -315,8 +315,7 @@ vows.describe('OrgMode Tests').addBatch({
 		/** Examples with max i= 15 we got
 		    msPerNode: 0.09316...
 		 */
-		console.dir(performance);
-		//console.log("");
+		//console.dir(performance);
 		assert.isTrue(performance.nodesPerSeconds>15000);
 		var fs=require('fs');
 		fs.unlink(tempFileName);
@@ -484,7 +483,7 @@ vows.describe('OrgMode BUGS').addBatch({
 	'key is not always unique on leaf nodes': function(){
 	    var n=orgParser.parseBigString(
 		"* Key test\nData Line1\nData Line2\n* Header 2\nData Line of header2\n* Header 3");
-	    console.dir(n);
+	    //console.dir(n);
 	    keyCollection={};
 	    _.each(n,function(elem){
 		    keyCollection[elem.key]=true;
@@ -508,11 +507,64 @@ vows.describe('OrgMode BUGS').addBatch({
 	    assert.equal(_.toArray(keyCollection).length,(n1.length+n2.length));
 	    
 	},
-	'Orgnode constructor validate parameters/1':function(){
+	'Orgnode constructor validate parameters/1 on arity':function(){
 	    assert.throws(function(){
 			      new orgParser.Orgnode("firstExtraParam","*", "Test", "", undefined, undefined);
 			  },Error);
 	   
-	}
+	},
+	'Orgnode constructor validate parameters/2 on types':function(){
+	    assert.throws(function(){
+			      new orgParser.Orgnode("*", "Test", "", undefined, new Object);
+			  },Error);
+	   
+	},
+	':PROPERTIES: without :END: generate an error':function(){
+		var fx=function(){
+		    orgParser.parseBigString(
+		    "* Test Tree                                                   :test:testRoot:\n"+
+		    "# Comment\n"+
+		    ":PROPERTIES:\n"+
+		    ":simple:yes\n"+
+		    /*":END:\n"+ INTENTIONALLY REMOVED*/
+		    "First line of Data\n"+
+		    "Second line of data\n"
+		);};
+		assert.throws(fx,orgParser.ParseError);
+	    },
+	'OrgQuery had a weak constructor':
+		{
+    
+		    topic:function(){
+			return (function(){new orgParser.OrgQuery(null,"Bof","unused");});
+		    },
+		    'OrgQuery does not accept wrong arrays.../1':function(){
+			assert.throws(function(){
+					  new orgParser.OrgQuery(["Cheating", "a lot"]);
+				      },Error);
+		    },
+		    '....      even if I cheat... /2':function(){
+			assert.throws(function(){
+			    new orgParser.OrgQuery([
+				    new orgParser.Orgnode("*", "Test", "", undefined,undefined),
+				    "Cheating", "a bit"]);
+			    },Error);
+		    },
+
+		    "The 'Cannot read property 'length' of null' is not thrown":
+		    function(f){	    
+			try{
+			    f();
+			} catch (x) {
+			    assert.isFalse(x instanceof TypeError);
+			    assert.isTrue(x instanceof orgParser.WrongConstrutorParametersError);
+			}
+			
+		    },
+		    "WrongConstrutorParametersError instead is thrown":function(f){
+			assert.throws(f,orgParser.WrongConstrutorParametersError);
+		    }
+		}
+
     }
 }).export(module);
