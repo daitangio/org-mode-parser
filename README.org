@@ -8,8 +8,8 @@ and exporting it in html, latex, pdf and so on
 
 ** What does it basically do org-mode-parser I either couldn't do before?
 I was unable to find a JavaScript parser for org-mode. Now we have one.
-Org-mode is so useful you will start writing your data in org-mode instead of text files or firing your sqlite-db for everything
-need a bit of structuring.
+Org-mode is so useful you will start writing your data in org-mode instead of text files for everything
+needing a bit of structuring.
 It is also _XML-free_ and yes, we like it  :)
 
 ** what are its key benefits?
@@ -64,6 +64,9 @@ for more usage examples
 The input must be a well formed org-mode file. 
 Parser can detect some corruptions, but it is not provided a specific sanity check.
 
+** Where can I find stable packages?
+On npm repository. 
+Github's latest checkout is the developement version, to use it at your own risk.
 
 * Design Goals
 
@@ -145,8 +148,8 @@ At the time of writing, the github repository is the master code repository
 2. Issue the following commands:
 #+BEGIN_SRC shell
 ./bin/testInstall.sh
-git commit -m "Testing install" .
-git tag -a -m "Delivered tag revision ORG_MODE_PARSER_0.0.3" ORG_MODE_PARSER_0.0.3
+git commit -m "Delivered tag revision ORG_MODE_PARSER_0.0.4" .
+git tag -a -m "Delivered tag revision ORG_MODE_PARSER_0.0.4" ORG_MODE_PARSER_0.0.4
 git push --tag
 git push
 npm publish
