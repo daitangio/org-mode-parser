@@ -87,6 +87,9 @@ Github's latest checkout is the developement version, to use it at your own risk
 
 
 * RELEASE NOTES
+** ORG_MODE_PARSER_0.0.5 :dev:
+
+
 
 ** ORG_MODE_PARSER_0.0.4 :published:
  1) Added new OrgQuery methods: 
@@ -99,7 +102,7 @@ Github's latest checkout is the developement version, to use it at your own risk
 BUGFIXES:
  + OrgQuery had a bug, and collected nodes could not be unique in some rare situations.
    Now we relay on underscore library for generating unique id
- + A set of stronger guards on constructors
+ + Added a set of stronger guards on constructors
     
 
 ** ORG_MODE_PARSER_0.0.3   :published:
@@ -150,8 +153,8 @@ At the time of writing, the github repository is the master code repository
 ./bin/testInstall.sh
 git commit -m "Delivered tag revision ORG_MODE_PARSER_0.0.4" .
 git tag -a -m "Delivered tag revision ORG_MODE_PARSER_0.0.4" ORG_MODE_PARSER_0.0.4
-git push --tag
 git push
+git push --tag
 npm publish
 #+END_SRC
 
