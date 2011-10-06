@@ -16,11 +16,8 @@ It is also "XML-free" :)
 A lot of unit testing (over 60) and a pretty fast parser (see below).
 Also, it has minimal requirements.
 
-** Defects?
-The input must be a well formed org-mode file. 
-Parser can detect some corruptions, but it is not provided a specific sanity check.
 
-Usage example:
+** Usage example:
 #<<opening Example>>
 # Look  http://orgmode.org/manual/Code-block-specific-header-arguments.html
 # for the syntax, anyway org-babel-tangle
@@ -62,6 +59,11 @@ Supporte methods of OrgQuery are:
 
 See the unit test section 'basicLibraries OrgQuery-Complex' on test/parseTest.js 
 for more usage examples
+
+** Known Defects?
+The input must be a well formed org-mode file. 
+Parser can detect some corruptions, but it is not provided a specific sanity check.
+
 
 * Design Goals
 
