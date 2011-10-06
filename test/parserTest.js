@@ -478,6 +478,47 @@ vows.describe('OrgMode Tests').addBatch({
 	} //basic
 }).export(module); // Export it
 
+vows.describe('OrgMode API Stability').addBatch({
+	'API respect 0.0.4 specification':{
+	    'Basic Objects Exists':function(){
+		assert.isFalse(_.isUndefined(orgParser.makelist));
+	    },
+
+
+	    'OrgQuery.prototype.selectSubtree Exists':function(){
+		assert.isFalse(_.isUndefined(orgParser.OrgQuery.prototype.selectSubtree));
+	    },
+
+	    'OrgQuery.prototype.selectTag Exists':function(){
+		assert.isFalse(_.isUndefined(orgParser.OrgQuery.prototype.selectTag));
+	    },
+
+	    'OrgQuery.prototype.sortBy Exists':function(){
+		assert.isFalse(_.isUndefined(orgParser.OrgQuery.prototype.sortBy));
+	    },
+
+	    'OrgQuery.prototype.reject Exists':function(){
+		assert.isFalse(_.isUndefined(orgParser.OrgQuery.prototype.reject));
+	    },
+
+	    'OrgQuery.prototype.rejectTag Exists':function(){
+		assert.isFalse(_.isUndefined(orgParser.OrgQuery.prototype.rejectTag));
+	    },
+
+	    'OrgQuery.prototype.toArray Exists':function(){
+		assert.isFalse(_.isUndefined(orgParser.OrgQuery.prototype.toArray));
+	    },
+
+	    'OrgQuery.prototype.each Exists':function(){
+		assert.isFalse(_.isUndefined(orgParser.OrgQuery.prototype.each));
+	    },
+
+	    'OrgQuery.prototype.random Exists':function(){
+		assert.isFalse(_.isUndefined(orgParser.OrgQuery.prototype.random));
+	    }
+	}
+}).export(module); 
+
 vows.describe('OrgMode BUGS').addBatch({
     '0.0.3 BUGS':{    
 	'key is not always unique on leaf nodes': function(){
@@ -557,13 +598,20 @@ vows.describe('OrgMode BUGS').addBatch({
 			    f();
 			} catch (x) {
 			    assert.isFalse(x instanceof TypeError);
-			    assert.isTrue(x instanceof orgParser.WrongConstrutorParametersError);
+			    assert.isTrue(x instanceof orgParser.IllegalArgumentException);
 			}
 			
 		    },
-		    "WrongConstrutorParametersError instead is thrown":function(f){
-			assert.throws(f,orgParser.WrongConstrutorParametersError);
+		    "IllegalArgumentException instead is thrown":function(f){
+			assert.throws(f,orgParser.IllegalArgumentException);
+		    },
+		    "IllegalArgumentException Exists":function (){
+			assert.isFalse(_.isUndefined(orgParser.IllegalArgumentException));
+		    },
+		    "ParseError Exists":function(){
+			assert.isFalse(_.isUndefined(orgParser.ParseError));
 		    }
+
 		}
 
     }

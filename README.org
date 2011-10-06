@@ -82,6 +82,7 @@ for more usage examples
 
 
 * RELEASE NOTES
+
 ** ORG_MODE_PARSER_0.0.4 :dev:
  1) Added new OrgQuery methods: 
     1. sortBy
