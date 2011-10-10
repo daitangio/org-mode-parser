@@ -484,6 +484,13 @@ vows.describe('OrgMode API Stability').addBatch({
         'API 0.0.5':{
 	    'rejectArchived':function(){
 		assert.isFalse(_.isUndefined(orgParser.OrgQuery.prototype.rejectArchived));
+	    },
+	    'drawer must be an array otherwise raise error':function(){
+		    assert.throws(function(){
+			 new orgParser.Orgnode("firstExtraParam","*", "Test", "", 
+			 undefined, "Cheating on drawer associative array");
+		    },Error);
+		
 	    }
 	},
 	'API respect 0.0.4 specification':{

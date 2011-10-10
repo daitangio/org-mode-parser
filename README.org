@@ -99,7 +99,7 @@ So do not relay on undeclared drawers, because we can change the parser to be mo
 Also undeclared drawer are not indented accordingly!
 
 * RELEASE NOTES
-** ORG_MODE_PARSER_0.0.5 :dev:
+** ORG_MODE_PARSER_0.0.5 :published:
 1. Addedd support for generic :DRAWER: syntax
 2. Archive tag is supported
 Missed:
