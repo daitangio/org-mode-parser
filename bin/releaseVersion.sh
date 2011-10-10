@@ -2,6 +2,7 @@
 # Internal housekeeping only
 # Example $0 ORG_MODE_PARSER_0.0.1
 set -e -x
+tagVersion="$1"
 $(dirname $0)/testInstall.sh || exit 1000
 echo Check the status
 git commit  --dry-run -a -m "Riepilogo" || echo ""
