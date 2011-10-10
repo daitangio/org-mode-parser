@@ -4,7 +4,7 @@
 set -e -x
 $(dirname $0)/testInstall.sh || exit 1000
 echo Check the status
-git commit  --dry-run -a -m "Riepilogo" 
+git commit  --dry-run -a -m "Riepilogo" || echo ""
 read -e  -p 'Proceed (y/n)?' -i y reply
 # exit if not yes
 test "$reply" != "y"  && exit
