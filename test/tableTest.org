@@ -1,0 +1,31 @@
+* Example of Org mode table
+| Simple table without heading | Col 2 | Col3 |
+| Row2                         |       |      |
+| Row3                         |       |      |
+* Table with heading
+| Simple table with heading | Col 2 | Col3 |
+|---------------------------+-------+------|
+| Row2                      |       |      |
+| Row3                      |       |      |
+
+* Table with narrow limit
+Use C-c C-c to update table structure after changing the <N>
+A special startup option may be used to align tables
+#+STARTUP: align
+| Simple table with heading | Col 2 | Col3 |
+|------------+-------+------|
+| Row2       |       |      |
+| Row3       |       |      |
+| <10>       |       |      |
+* Table groups
+Taken from 3.3 info manual of org 7
+|   |  N | N^2 | N^3 | N^4 | sqrt(n) | sqrt[4](N) |
+|---+----+-----+-----+-----+---------+------------|
+| / | <> |   < |     |   > |       < |          > |
+| # |  1 |   1 |   1 |   1 |       1 |          1 |
+| # |  2 |   4 |   8 |  16 |  1.4142 |     1.1892 |
+| # |  3 |   9 |  27 |  81 |  1.7321 |     1.3161 |
+|---+----+-----+-----+-----+---------+------------|
+#+TBLFM: $3=$2^2::$4=$2^3::$5=$2^4::$6=sqrt($2)::$7=sqrt(sqrt(($2)))
+
+

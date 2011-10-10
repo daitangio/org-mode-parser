@@ -13,15 +13,15 @@ needing a bit of structuring.
 It is also _XML-free_ and yes, we like it  :)
 
 ** what are its key benefits?
-A lot of unit testing (over 60) and a pretty fast parser (see below).
+A lot of unit testing (over 80) and a pretty fast parser (see below).
 Also, it has minimal requirements.
-
 
 ** Usage example:
 #<<opening Example>>
 # Look  http://orgmode.org/manual/Code-block-specific-header-arguments.html
-# for the syntax, anyway org-babel-tangle
-# will export this soruce
+# for the syntax of BEGIN_SRC :tangle, 
+# anyway org-babel-tangle
+# will export this source
 #+BEGIN_SRC javascript -n -r  :tangle basic-example.js
 var orgParser=require('org-mode-parser');
 orgParser.makelist("README.org", function (nodelist){
@@ -57,8 +57,9 @@ Supporte methods of OrgQuery are:
  + random()
    Extract a random element
 
+
 See the unit test section 'basicLibraries OrgQuery-Complex' on test/parseTest.js 
-for more usage examples
+for more usage examples, and do not miss the [[FAQ]]
 
 ** Known Defects?
 The input must be a well formed org-mode file. 
@@ -83,13 +84,28 @@ Github's latest checkout is the developement version, to use it at your own risk
 ** Tests are documentation.
     Please look at test/parserTest.js file for usage example.
     Tests are commenteted and pretty self explanatory
+* FAQ
+** Who is my best friend?
+OrgQuery is a very handy object, because allow you to filter nodes in a structured way.
+Use it instead of hand-parsing
 
 
+** How can I get rid of archived nodes?
+Use the OrgQuery.rejectArchived() method
+
+** Undeclared drawer are parsed?
+Yes, but org mode wants them to be declared (see par 2.9 Drawers on documentation).
+So do not relay on undeclared drawers, because we can change the parser to be more stringent.
+Also undeclared drawer are not indented accordingly!
 
 * RELEASE NOTES
 ** ORG_MODE_PARSER_0.0.5 :dev:
-
-
+1. Addedd support for generic :DRAWER: syntax
+2. Archive tag is supported
+Missed:
++ links/ Footnotes  are still completly missed
++ Ordered/Bulletin list are still missed, 
+  but org-mode will present it in a nice way anyway
 
 ** ORG_MODE_PARSER_0.0.4 :published:
  1) Added new OrgQuery methods: 
@@ -104,7 +120,6 @@ BUGFIXES:
    Now we relay on underscore library for generating unique id
  + Added a set of stronger guards on constructors
     
-
 ** ORG_MODE_PARSER_0.0.3   :published:
   1) Added the ability to regenerate the Orgnode as string using the method
      toOrgString()

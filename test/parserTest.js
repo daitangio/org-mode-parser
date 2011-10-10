@@ -84,10 +84,10 @@ vows.describe('OrgMode Tests').addBatch({
 		assert.equal(q[2],'c');	
 	    },
 	    'Orgnode object':function(){
-		new orgParser.Orgnode("*", "Test", "", undefined, undefined);
+		new orgParser.Orgnode("*", "Test", "", undefined, undefined,undefined);
 	    },
 	    'Orgnode direct accessors':function(){
-		var n=new orgParser.Orgnode("*", "Test", "", undefined, undefined);
+		var n=new orgParser.Orgnode("*", "Test", "", undefined, undefined,undefined );
 		var ptest={
 		    a:1
 		};		
@@ -462,7 +462,7 @@ vows.describe('OrgMode Tests').addBatch({
 		_.each(_.range(10000), function (fakeNumber){
 			rList.push(
 				new orgParser.Orgnode("*", "Test "+fakeNumber, 
-				"", undefined, undefined));
+				"", undefined, undefined,undefined));
 		});
 		var ofd=new orgParser.OrgQuery( rList );
 		var collector={};
@@ -479,6 +479,11 @@ vows.describe('OrgMode Tests').addBatch({
 }).export(module); // Export it
 
 vows.describe('OrgMode API Stability').addBatch({
+        'API 0.0.5':{
+	    'rejectArchived':function(){
+		assert.isFalse(_.isUndefined(orgParser.OrgQuery.prototype.rejectArchived));
+	    }
+	},
 	'API respect 0.0.4 specification':{
 	    'Basic Objects Exists':function(){
 		assert.isFalse(_.isUndefined(orgParser.makelist));
@@ -550,13 +555,13 @@ vows.describe('OrgMode BUGS').addBatch({
 	},
 	'Orgnode constructor validate parameters/1 on arity':function(){
 	    assert.throws(function(){
-			      new orgParser.Orgnode("firstExtraParam","*", "Test", "", undefined, undefined);
+			      new orgParser.Orgnode("firstExtraParam","*", "Test", "", undefined, undefined,undefined);
 			  },Error);
 	   
 	},
 	'Orgnode constructor validate parameters/2 on types':function(){
 	    assert.throws(function(){
-			      new orgParser.Orgnode("*", "Test", "", undefined, new Object);
+			      new orgParser.Orgnode("*", "Test", "", undefined, new Object,undefined);
 			  },Error);
 	   
 	},
@@ -615,4 +620,98 @@ vows.describe('OrgMode BUGS').addBatch({
 		}
 
     }
+}).export(module);
+
+vows.describe('OrgMode 0.0.5').addBatch({
+
+'generic :DRAWER: syntax':{
+    topic: function (){
+	orgParser.makelist("./test/drawerAndArchiveTag.org",this.callback);
+    },
+    'DRAWER_ONE exists':function(nodes, u){
+	var n1=nodes[0];
+	assert.isTrue(n1.drawer.DRAWER_ONE!==null);
+    },
+    'DRAWER_ONE has content':function(nodes, u){
+	var n1=nodes[0];
+	assert.equal(
+	    n1.drawer.DRAWER_ONE,"I am drawer one, with one line\n");
+    },
+
+    'DRAWER_ONE exists and there is no DRAWER TWO on node1':function(nodes, u){
+	var n1=nodes[0];	
+	assert.isTrue(n1.drawer['DRAWER_TWO']===undefined);
+    },
+    'DRAWER_TWO exists':function(nodes, u){
+	var n2=nodes[1];
+	//console.dir(n2);
+	assert.isTrue(n2.drawer.DRAWER_TWO!==null);
+    },
+    'double drawers works':function(nodes,u){
+	var q=new orgParser.OrgQuery(nodes);
+	var n=q.selectTag('indentedDrawerTest').first();
+	//console.dir(n);
+	assert.isTrue(n.drawer.Drawer1 !==undefined);
+	assert.isTrue(n.drawer.Drawer2 !==undefined);
+
+    },
+    'drawers indentation is stripped away':function(nodes,u){
+	var q=new orgParser.OrgQuery(nodes);
+	var n=q.selectTag('indentedDrawerTest').first();
+	//console.dir(n);
+	var drawer1Content=n.drawer.Drawer1;
+	assert.equal(drawer1Content,"Nice to meet you, unindented I hope\n");
+    },
+    'complex drawer mix':function(nodes,u){
+	var q=new orgParser.OrgQuery(nodes);
+	var n=q.selectTag('complexDrawerMix').first();
+	assert.equal(n.body,'In this header, drawer are mixed in a fancy way\nTest below drawer1\nText above drawer2\nText below drawer2\n');
+	assert.isTrue(n.drawer.Drawer1 !==undefined);
+	assert.isTrue(n.drawer.Drawer2 !==undefined);
+	assert.equal(n.drawer.Drawer2, "Drawer2 content\n");
+    }
+
+},
+'Archive tag is supported':{
+    topic: function (){
+	orgParser.makelist("./test/drawerAndArchiveTag.org",this.callback);
+    },
+    'last two nodes are archived':function (nodes,u){
+	assert.isTrue(nodes[nodes.length-2].isArchived());
+	assert.isTrue(nodes[nodes.length-1].isArchived());
+    },
+    'first node not archived':function (nodes,u){
+	assert.isFalse(nodes[0].isArchived());
+    },
+    'query on archive tag':function(nodes,u){
+	var nodeSize=nodes[0].properties.expectedNodes;
+	var expectedArchiveNodes=nodes[0].properties.archivedNodes;
+	var q=new orgParser.OrgQuery(nodes);
+	var notArchived=q.rejectTag('ARCHIVE').length;
+	assert.equal(notArchived,nodeSize-expectedArchiveNodes);	
+    },
+    'rejectArchived works':function(nodes,u){
+	var q=new orgParser.OrgQuery(nodes);
+	var nodeSize=nodes[0].properties.expectedNodes;
+	var expectedArchiveNodes=nodes[0].properties.archivedNodes;
+	var expected=nodeSize-expectedArchiveNodes;
+	assert.equal(q.rejectArchived().length, expected);
+	
+    }
+},
+	'drawer without an :END: must fail':function(){
+		var fx=function(){
+		    orgParser.parseBigString(
+		    "* Test Tree                                                   :test:testRoot:\n"+
+		    "# Comment\n"+
+		    ":WRONG_DRAWER:\n"+
+		    ":simple:yes\n"+
+		    /*":END:\n"+ INTENTIONALLY REMOVED*/
+		    "First line of Data\n"+
+		    "Second line of data\n"
+		);};
+		assert.throws(fx,orgParser.ParseError);
+	}
+
+
 }).export(module);

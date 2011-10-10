@@ -1,0 +1,39 @@
+* Node with a generic drawer
+  :PROPERTIES:
+  :expectedNodes: 6
+  :archivedNodes:2
+  :END:
+  you can define also the drawer using the following directive....
+#+DRAWERS: DRAWER_ONE DRAWER_TWO Drawer1 Drawer2
+:DRAWER_ONE:
+I am drawer one, with one line
+:END:
+* A second drawer
+  :DRAWER_TWO:
+  Different alignment baby
+  Declared drawer cannot have different alignment, as far as we know
+  :END:
+*** A very complex drawer case    :indentedDrawerTest:
+  :Drawer1:
+  Nice to meet you, unindented I hope
+  :END:
+  :Drawer2:
+  Another one
+  :END:
+*** Another complex case :complexDrawerMix:
+In this header, drawer are mixed in a fancy way
+:Drawer1:
+Drawer1 content
+:END:
+Test below drawer1
+Text above drawer2
+:Drawer2:
+Drawer2 content
+:END:
+Text below drawer2
+* Archived node							    :ARCHIVE:
+This node is archived baby
+* Archived node with drawer :ARCHIVE:
+  :DRAWER_ONE:
+  I am drawer inside an archived node
+  :END:
