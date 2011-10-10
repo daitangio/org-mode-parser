@@ -315,7 +315,9 @@ vows.describe('OrgMode Tests').addBatch({
 		/** Examples with max i= 15 we got
 		    msPerNode: 0.09316...
 		 */
-		//console.dir(performance);
+		if(!(performance.nodesPerSeconds>15000) ){		   
+		  console.dir(performance);  
+		}
 		assert.isTrue(performance.nodesPerSeconds>15000);
 		var fs=require('fs');
 		fs.unlink(tempFileName);
