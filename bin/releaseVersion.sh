@@ -17,3 +17,4 @@ git tag -a -m "Revision $tagVersion"  $tagVersion
 git tag
 git push -v --tags
 git push -v
+npm publish

@@ -296,35 +296,7 @@ vows.describe('OrgMode Tests').addBatch({
 	    }
 	    
 	},
-	'Simple Performance Testing':{
-	    topic: function(){
-		
-		var fs=require('fs');
-		var stuffToDuplicate=fs.readFileSync("./test/treeLevel.org",'utf-8');
-		var fd=fs.openSync(tempFileName, "w+");
-		for(var i=1; i<=9; i++){	
-		    //console.log(stuffToDuplicate);
-		    stuffToDuplicate +=stuffToDuplicate;
-		}
-		fs.writeSync(fd, stuffToDuplicate, 0, 'utf-8');
-		fs.closeSync(fd);
-		orgParser.makelistWithPerformance(tempFileName, this.callback);
-	    },
 
-	    'Huge file Loading':function(nodelist,performance){		    
-		/** Examples with max i= 15 we got
-		    msPerNode: 0.09316...
-		 */
-		if(!(performance.nodesPerSeconds>15000) ){		   
-		  console.dir(performance);  
-		}
-		assert.isTrue(performance.nodesPerSeconds>15000);
-		var fs=require('fs');
-		fs.unlink(tempFileName);
-	    },
-	    
-	    
-	},
 	'OrgQuery':{
 	    topic: function (){
 		var thisOfTest=this;
@@ -478,6 +450,47 @@ vows.describe('OrgMode Tests').addBatch({
 
 	
 	} //basic
+,
+	'Simple Performance Testing':{
+	    topic: function(){
+		
+		var fs=require('fs');
+		var stuffToDuplicate=fs.readFileSync("./test/treeLevel.org",'utf-8');
+		
+		for(var i=1; i<=9; i++){	
+		    //console.log(stuffToDuplicate);
+		    stuffToDuplicate +=stuffToDuplicate;
+		}
+		
+		orgParser.makelistFromStringWithPerformance(stuffToDuplicate,this.callback,true);
+	    },
+
+	    'Huge string Loading performance':function(nodelist,performance){		    
+		
+		/** Examples with max i= 15 we got
+		    msPerNode: 0.09316...
+		 */
+		var success=performance.nodesPerSeconds>10000;
+		if(!success ){		   
+		  console.dir(performance);  
+		} //else console.dir(performance);  
+		assert.isTrue(success);	
+	    },
+	    'Regen Time performance':function(orgNodesList,performance){
+		var s="";
+		var startTime=Date.now();
+		_.each(orgNodesList, function (nx){
+			   s+=nx.toOrgString();
+		});
+		var timeTaken=Date.now()-startTime;
+		var nodesPerSeconds= 1000* (orgNodesList.length/timeTaken);	
+		console.log("toOrgString() per seconds:"+nodesPerSeconds);
+	    }
+	    
+	    
+	}
+
+
 }).export(module); // Export it
 
 vows.describe('OrgMode API Stability').addBatch({
@@ -629,6 +642,26 @@ vows.describe('OrgMode BUGS').addBatch({
 		}
 
     }
+}).export(module);
+
+//test/tableTest.org
+vows.describe('OrgMode 0.0.6').addBatch({
+ // 'Table API':{
+ //     topic:function(){
+ // 	 var mythis=this;
+ // 	 orgParser.makelist("./test/tableTest.org",
+ // 	     function(data){
+ // 		 var q=new orgParser.OrgQuery(data);
+ // 		 mythis.callback(q,data);
+ // 	 });
+	 
+ //     },
+ //     'Query for a Table':function(q,u){
+ // 	 var firstTable=q.first().table(0);
+ // 	 assert.equal(firstTable[0][0],"Simple table without heading");
+ //     }
+ // }
+	
 }).export(module);
 
 vows.describe('OrgMode 0.0.5').addBatch({

@@ -99,6 +99,9 @@ So do not relay on undeclared drawers, because we can change the parser to be mo
 Also undeclared drawer are not indented accordingly!
 
 * RELEASE NOTES
+** ORG_MODE_PARSER_0.0.6 						:dev:
+Planned improved speed
+
 ** ORG_MODE_PARSER_0.0.5 :published:
 1. Addedd support for generic :DRAWER: syntax
 2. Archive tag is supported
@@ -119,7 +122,7 @@ BUGFIXES:
  + OrgQuery had a bug, and collected nodes could not be unique in some rare situations.
    Now we relay on underscore library for generating unique id
  + Added a set of stronger guards on constructors
-    
+   
 ** ORG_MODE_PARSER_0.0.3   :published:
   1) Added the ability to regenerate the Orgnode as string using the method
      toOrgString()
