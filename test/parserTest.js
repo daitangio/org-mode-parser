@@ -646,20 +646,83 @@ vows.describe('OrgMode BUGS').addBatch({
 
 //test/tableTest.org
 vows.describe('OrgMode 0.0.7').addBatch({
+
  'Refining Subtree api':{
      
+     'You cannot push undefined to OrgQuery':function (){
+	 
+	 assert.throws(function(){
+			   new orgParser.OrgQuery(undefined);
+		       },orgParser.IllegalArgumentException);
+     },
+     'You cannot fool selectSubtree /1':function(){
 
- 'SelectSubtree Work nicely':function(){
+	 assert.throws(function(){
+			   new orgParser.OrgQuery([]).selectSubtree([]);
+		       },orgParser.IllegalArgumentException);
+
+	     
+     },
+     'SelectSubtree Work nicely':function(){
 
     orgParser.makelist("./README.org", function (nl){
     var q=new orgParser.OrgQuery(nl);
     var subtree=q.selectSubtree(q.selectTag('releaseNotes').first());
     //console.dir(subtree);
-    assert.isTrue(subtree.length>1);
-    
+    assert.isTrue(subtree.length>1);    
   });
- }
-}
+ },
+  'Subtree is able to manage collections too now':function(){
+    orgParser.makelist("./README.org", function (nl){
+	var q=new orgParser.OrgQuery(nl);
+	// Note: no first() needed:selectSubtree is now able to
+	// process collections
+	var subtree=q.selectSubtree(q.selectTag('releaseNotes'));
+	assert.isFalse(_.isUndefined(subtree) && _.isNull(subtree));
+	assert.isTrue(subtree.length>5);    
+	//console.dir(subtree);
+    });
+ 	 
+  },
+     'OrgQuery API improvements': {
+	topic: function(){
+	    var myCallback=this.callback;
+	    orgParser.makelist("./test/orgmodeTest.org", function (nl){
+		    myCallback(new orgParser.OrgQuery(nl),nl);
+	    });
+	},	 
+     
+	'selectTag is able to flat a single node':function(q,n){
+		var r1=q.selectTag('veryHard');
+		assert.equal(r1.length,1);
+		assert.equal(r1.first().headline,"Node With Priority B, a custom keyword and a tag");
+		// But also work...
+		assert.equal(r1.headline,r1.first().headline);	    
+	},
+	'first() is optional if you are brave':function(q,n){
+	    var testTree=q.selectSubtree(q.selectTag('testRoot'));	    
+	    assert.equal(testTree.length,4);
+	    var monoNode=testTree.selectTag('unique');
+	    //console.dir(monoNode);
+	    assert.equal(monoNode.headline,"Tree 2's subTree");
+	    assert.isTrue(monoNode.mergedObject);
+	    // So
+	    assert.equal(
+		q.selectSubtree(q.selectTag('testRoot').first()).selectTag('unique').first().headline,
+		monoNode.headline);
+	    // But thery are NOT equal...
+	    var objectObtainedInPlainWay=q.selectSubtree(q.selectTag('testRoot').first()).selectTag('unique').first();
+	    assert.notEqual(objectObtainedInPlainWay,
+		monoNode);	   
+	    // BUT... keys are not the same...
+	    assert.notEqual(objectObtainedInPlainWay.key,
+		monoNode.key);
+	    // and it is not a true Orgnode...
+	    assert.isTrue(!(monoNode instanceof orgParser.Orgnode));
+	}
+     }
+     
+} //Refining Subtree api
 	
 }).export(module);
 

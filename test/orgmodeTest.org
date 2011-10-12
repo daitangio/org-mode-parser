@@ -42,6 +42,6 @@ Fa anche il test di non visibilità properties nel body
 Test di SubTree1 che non ha figli
 *** Tree2 con un figlio 					  :testTree2:
 Test di SubTree2 che ha un figlio
-**** SubTree di Tree2				      :testTree2:testTree2_1:
+**** Tree 2's subTree 			       :testTree2:testTree2_1:unique:
 
 
