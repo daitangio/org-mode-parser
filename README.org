@@ -13,8 +13,15 @@ needing a bit of structuring.
 It is also _XML-free_ and yes, we like it  :)
 
 ** what are its key benefits?
-A lot of unit testing (over 80) and a pretty fast parser (see below).
+A lot of unit testing (over 90) and a pretty fast parser (see below).
 Also, it has minimal requirements.
+
+** Installation
+On a shell, which can run node, try out:
+#+BEGIN_SRC shell
+curl http://npmjs.org/install.sh | sh
+npm install org-mode-parser
+#+END_SRC
 
 ** Usage example:
 #<<opening Example>>
@@ -99,8 +106,8 @@ So do not relay on undeclared drawers, because we can change the parser to be mo
 Also undeclared drawer are not indented accordingly!
 
 * RELEASE NOTES
-** ORG_MODE_PARSER_0.0.6 						:dev:
-Planned improved speed
+** ORG_MODE_PARSER_0.0.6 						:published:
+Minor documentation fixes
 
 ** ORG_MODE_PARSER_0.0.5 :published:
 1. Addedd support for generic :DRAWER: syntax
@@ -168,12 +175,7 @@ At the time of writing, the github repository is the master code repository
 1. Check the package.json version
 2. Issue the following commands:
 #+BEGIN_SRC shell
-./bin/testInstall.sh
-git commit -m "Delivered tag revision ORG_MODE_PARSER_0.0.4" .
-git tag -a -m "Delivered tag revision ORG_MODE_PARSER_0.0.4" ORG_MODE_PARSER_0.0.4
-git push
-git push --tag
-npm publish
+./bin/releaseVersion.sh ORG_MODE_PARSER_0.0.6
 #+END_SRC
 
 
