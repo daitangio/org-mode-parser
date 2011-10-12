@@ -52,7 +52,7 @@ orgParser.makelist("./test/treeLevel.org",function(nodes){
 });
 #+END_SRC
 
-Supporte methods of OrgQuery are:
+Supported methods of OrgQuery are:
  + selectSubtree(node)
    Extract the nodes hierarchically below the given input
  + selectTag(tagString)
@@ -96,7 +96,6 @@ Github's latest checkout is the developement version, to use it at your own risk
 OrgQuery is a very handy object, because allow you to filter nodes in a structured way.
 Use it instead of hand-parsing
 
-
 ** How can I get rid of archived nodes?
 Use the OrgQuery.rejectArchived() method
 
@@ -105,17 +104,26 @@ Yes, but org mode wants them to be declared (see par 2.9 Drawers on documentatio
 So do not relay on undeclared drawers, because we can change the parser to be more stringent.
 Also undeclared drawer are not indented accordingly!
 
+** Querying Questions
+*** How can I find all the subnodes of node tagged releaseNotes and the query it?
+#+BEGIN_SRC javascript
+var q=new parser.OrgQuery(nl);
+var subtree=q.selectSubtree(q.selectTag('releaseNotes').first());
+subtree.selectTag('dev').first().headline; 
+#+END_SRC
+
 * RELEASE NOTES :releaseNotes:
 ** ORG_MODE_PARSER_0.0.7 :dev:
-KNOWN_LIMITATIONS
-var devTag=orgQuery.selectTag('releaseNotes').selectSubtree().selectTag('dev').heading();
-Do not work as expected because selectTag do not carry on the subtrees.
 
- 
-** ORG_MODE_PARSER_0.0.6 						:published:
+
+Remove the needs of first() on some cases, but API gets dirty
+Still not released.
+?Also, q.selectSubtree() == q which is a bit weird??
+
+** ORG_MODE_PARSER_0.0.6					  :published:
 Minor documentation fixes
 
-** ORG_MODE_PARSER_0.0.5 :published:
+** ORG_MODE_PARSER_0.0.5					  :published:
 1. Addedd support for generic :DRAWER: syntax
 2. Archive tag is supported
 Missed:
@@ -175,7 +183,7 @@ avoid using it directly with _.each(...)
 ** ORG_MODE_PARSER_0.0.1					  :published:
 First revision
 
-* Release command sequence
+* Release command sequence / Kitchensink 		  :config:kitchensink:
 At the time of writing, the github repository is the master code repository
 
 1. Check the package.json version
@@ -183,6 +191,7 @@ At the time of writing, the github repository is the master code repository
 #+BEGIN_SRC shell
 ./bin/releaseVersion.sh ORG_MODE_PARSER_0.0.6
 #+END_SRC
+
 
 
 #Config

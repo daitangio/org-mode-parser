@@ -8,7 +8,7 @@ var parser=require('../lib/org-mode-parser');
 parser.makelist(process.argv[2], function (nl){
     var q=new parser.OrgQuery(nl);
     //console.dir(q);
-    var subtree=q.selectSubtree(q.selectTag('releaseNotes').first());
+    var subtree=q.selectSubtree(q.selectTag('releaseNotes'));
     //console.dir(subtree.selectTag('dev').first());
     var devTag=subtree.selectTag('dev').first().headline;  
     console.log(devTag);

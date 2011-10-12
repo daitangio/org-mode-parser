@@ -3,7 +3,7 @@
 # Example $0 ORG_MODE_PARSER_0.0.1
 set -e -x
 binDir=$(dirname $0)
-tagVersion=$($binDir/findOutDeployVersion $binDir/../README.org)
+tagVersion=$($binDir/findOutDeployTag $binDir/../README.org)
 #echo $tagVersion
 $(dirname $0)/installationTest || exit 1000
 echo Check the status
@@ -12,10 +12,10 @@ read -e  -p 'Proceed (y/n)?' -i y reply
 test "$reply" != "y"  && exit
 echo Commit...
 git status
-git add -i -v
-git commit -a -v  -m "Delivered tag revision $tagVersion" || echo "?Nothing to commit"
-git tag -a -m "Revision $tagVersion"  $tagVersion
-git tag
-git push -v --tags
-git push -v
-npm publish
+
+# git commit -a -v  -m "Delivered tag revision $tagVersion" || echo "?Nothing to commit"
+# git tag -a -m "Revision $tagVersion"  $tagVersion
+# git tag
+# git push -v --tags
+# git push -v
+# npm publish

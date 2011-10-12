@@ -710,16 +710,22 @@ vows.describe('OrgMode 0.0.7').addBatch({
 	    assert.equal(
 		q.selectSubtree(q.selectTag('testRoot').first()).selectTag('unique').first().headline,
 		monoNode.headline);
-	    // But thery are NOT equal...
+	    // But they are NOT equal because...
 	    var objectObtainedInPlainWay=q.selectSubtree(q.selectTag('testRoot').first()).selectTag('unique').first();
 	    assert.notEqual(objectObtainedInPlainWay,
 		monoNode);	   
-	    // BUT... keys are not the same...
+	    // ... keys are not the same...
 	    assert.notEqual(objectObtainedInPlainWay.key,
 		monoNode.key);
 	    // and it is not a true Orgnode...
 	    assert.isTrue(!(monoNode instanceof orgParser.Orgnode));
-	}
+	},
+	 'q.selectSubtree(emptyNodeList) === q.selectSubtree() === q':function(q,n){
+	     var bastardEmptyQuery=q.selectTag('nonExistent');
+	     assert.equal(bastardEmptyQuery.length,0);
+	     var resultOfABadMix=q.selectSubtree(bastardEmptyQuery);
+	     assert.equal(resultOfABadMix.length, q.length);
+	 }
      }
      
 } //Refining Subtree api
