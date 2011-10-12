@@ -12,7 +12,7 @@ test "$reply" != "y"  && exit
 echo Commit...
 git status
 git add -i -v
-git commit -a -v  -m "Delivered tag revision $tagVersion"
+git commit -a -v  -m "Delivered tag revision $tagVersion" || echo "?Nothing to commit"
 git tag -a -m "Revision $tagVersion"  $tagVersion
 git tag
 git push -v --tags
