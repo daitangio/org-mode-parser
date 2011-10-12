@@ -105,7 +105,13 @@ Yes, but org mode wants them to be declared (see par 2.9 Drawers on documentatio
 So do not relay on undeclared drawers, because we can change the parser to be more stringent.
 Also undeclared drawer are not indented accordingly!
 
-* RELEASE NOTES
+* RELEASE NOTES :releaseNotes:
+** ORG_MODE_PARSER_0.0.7 :dev:
+KNOWN_LIMITATIONS
+var devTag=orgQuery.selectTag('releaseNotes').selectSubtree().selectTag('dev').heading();
+Do not work as expected because selectTag do not carry on the subtrees.
+
+ 
 ** ORG_MODE_PARSER_0.0.6 						:published:
 Minor documentation fixes
 

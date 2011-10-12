@@ -2,12 +2,13 @@
 # Internal housekeeping only
 # Example $0 ORG_MODE_PARSER_0.0.1
 set -e -x
-tagVersion="$1"
-$(dirname $0)/testInstall.sh || exit 1000
+binDir=$(dirname $0)
+tagVersion=$($binDir/findOutDeployVersion $binDir/../README.org)
+#echo $tagVersion
+$(dirname $0)/installationTest || exit 1000
 echo Check the status
 git commit  --dry-run -a -m "Riepilogo" || echo ""
 read -e  -p 'Proceed (y/n)?' -i y reply
-# exit if not yes
 test "$reply" != "y"  && exit
 echo Commit...
 git status

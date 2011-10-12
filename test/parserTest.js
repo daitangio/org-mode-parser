@@ -645,22 +645,21 @@ vows.describe('OrgMode BUGS').addBatch({
 }).export(module);
 
 //test/tableTest.org
-vows.describe('OrgMode 0.0.6').addBatch({
- // 'Table API':{
- //     topic:function(){
- // 	 var mythis=this;
- // 	 orgParser.makelist("./test/tableTest.org",
- // 	     function(data){
- // 		 var q=new orgParser.OrgQuery(data);
- // 		 mythis.callback(q,data);
- // 	 });
-	 
- //     },
- //     'Query for a Table':function(q,u){
- // 	 var firstTable=q.first().table(0);
- // 	 assert.equal(firstTable[0][0],"Simple table without heading");
- //     }
- // }
+vows.describe('OrgMode 0.0.7').addBatch({
+ 'Refining Subtree api':{
+     
+
+ 'SelectSubtree Work nicely':function(){
+
+    orgParser.makelist("./README.org", function (nl){
+    var q=new orgParser.OrgQuery(nl);
+    var subtree=q.selectSubtree(q.selectTag('releaseNotes').first());
+    //console.dir(subtree);
+    assert.isTrue(subtree.length>1);
+    
+  });
+ }
+}
 	
 }).export(module);
 
