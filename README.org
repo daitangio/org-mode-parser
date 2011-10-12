@@ -118,7 +118,12 @@ subtree.selectTag('dev').first().headline;
 
 Remove the needs of first() on some cases, but API gets dirty
 Still not released.
-?Also, q.selectSubtree() == q which is a bit weird??
+Also we get
+ q.selectSubtree(emptyNodeList) === q.selectSubtree(null) == q.selectSubtree() === q
+which is a bit naif, but it is not an intersect.
+
+
+
 
 ** ORG_MODE_PARSER_0.0.6					  :published:
 Minor documentation fixes
