@@ -116,16 +116,22 @@ subtree.selectTag('dev').first().headline;
 ** ORG_MODE_PARSER_0.0.7 :dev:
 
 
-Stringer selectSubtree API
-Evaluted the option of omitting first() on mono results, but API gets dirty
-See commit tag dev_orgquery_one_node_merge  (6dd58da5e3a90e3f651bba4949cbe7b95155bc6b)
 
-/selectSubtee API Keep in mind this rule:/
+*** Stringent selectSubtree API (BUGFIX).
+anOrgQuery.selectSubtree(i)  now will accept only these types of i objects:
+ + A Orgnode
+ + A 1-size OrgQuery collection
+ + empty/null
+
+/Keep in mind the following rule for understanding the behavior:/
  q.selectSubtree(emptyNodeList) === q.selectSubtree(null) == q.selectSubtree() === q
-which is a bit naif.
+which is a bit naif, but it will not break the existing API.
 
-BUGFIX:
- Now selectSubtree
+*** Magic avoided
+Evaluted the option of omitting first() on mono results, but API gets dirty. 
+For play with it, see commit tag dev_orgquery_one_node_merge  (6dd58da5e3a90e3f651bba4949cbe7b95155bc6b)
+and serch for the use of the "mergeFrom" method, now disabled.
+
 
 ** ORG_MODE_PARSER_0.0.6					  :published:
 Minor documentation fixes
