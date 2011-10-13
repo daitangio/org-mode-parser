@@ -116,14 +116,16 @@ subtree.selectTag('dev').first().headline;
 ** ORG_MODE_PARSER_0.0.7 :dev:
 
 
-Remove the needs of first() on some cases, but API gets dirty
-Still not released.
-Also we get
+Stringer selectSubtree API
+Evaluted the option of omitting first() on mono results, but API gets dirty
+See commit tag dev_orgquery_one_node_merge  (6dd58da5e3a90e3f651bba4949cbe7b95155bc6b)
+
+/selectSubtee API Keep in mind this rule:/
  q.selectSubtree(emptyNodeList) === q.selectSubtree(null) == q.selectSubtree() === q
-which is a bit naif, but it is not an intersect.
+which is a bit naif.
 
-
-
+BUGFIX:
+ Now selectSubtree
 
 ** ORG_MODE_PARSER_0.0.6					  :published:
 Minor documentation fixes
