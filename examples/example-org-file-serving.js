@@ -4,7 +4,8 @@
  * browsable web site.
  * The rendering is fair simple,
  * and the data structure needs improvements.
- * Anyway, it rocks
+ * Anyway, it rocks, try out with
+ *  org-mode-parser>nodemon examples/example-org-file-serving.js ./README.org
  */
 var http = require('http');
 var path = require('path');
@@ -15,14 +16,18 @@ var _=require("underscore");
 var orgParser=require("../lib/org-mode-parser");
 
 
-
-
 var orgNodes=orgParser.makelist(process.argv[2], function (nodes){
 
 
 function renderNavigation(node,vfilePath){
-    var content;
-    content="<h2>Sub Nodes</h2>";
+    var content="";
+    //webNextNode
+    if(node.webNextNode){
+	content +="<a  href='"+node.webNextNode.webPath +"'> Next</a> "+ node.webNextNode.webPath;
+	content +="<br>";
+    }
+    
+    content+="<h2>Sub Nodes</h2>";
     _.each(_.keys(path2node),function (pathx){
 	    if(pathx.match(vfilePath)){
 		content+='<a href=\"'+pathx+'" >'+pathx+' </a><br>';
@@ -62,6 +67,7 @@ function renderNode(node,vfilePath){
 	    console.log("WARN: DUPLICATION..."+path);
 	}
 	path2node[path]=n;
+	n.webPath=path;
 	handyUrlList.push(path);
 	return path;
     }
@@ -69,11 +75,12 @@ function renderNode(node,vfilePath){
 
     
     function processLevel(collection,levelToScan,fatherPath){
-	_.each(collection,function (n){
-	   // Process first level and then recurse
+	_.each(collection,function (n,i){
+	   // Process required level and then recurse
 	   if(n.level==levelToScan){
+
 	       var path=mapNode(fatherPath,n);
-	       console.log(levelToScan+' '+ path+"\t=>\t"+n); 
+	       console.log(levelToScan+' '+ path+"\t=>\t"+n.headline); 
 	       var subtree=query.selectSubtree(n);
 	       processLevel(subtree.toArray(),levelToScan+1, path);
 	   }
@@ -81,6 +88,18 @@ function renderNode(node,vfilePath){
 	
     }
     processLevel(query.toArray(),1,"");
+				    
+    // Builds webPrevNode,webNextNode	
+    var prevNode=null, nextNode=null;
+    _.each(nodes, function(n){
+	n.webPrevNode=prevNode;
+	prevNode=n;
+	if(n.webPrevNode){
+	    n.webPrevNode.webNextNode=n;
+	}
+    });
+				    
+    
 
     //var defaultUrl=handyUrlList[0];
     //console.log("Index:"+defaultUrl);
