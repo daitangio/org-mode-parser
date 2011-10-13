@@ -1,4 +1,6 @@
 * Level one :data:1:
+This file is used for some tree-nesting test and ALSO for performance testing.
+For this reason, the performance testing part has a very complex node on its hown
 First Level 
 with data
 ** Level two :nodata:
@@ -17,5 +19,29 @@ It has:
  + some properties 
  + a CLOCK entry used for measuting time taken dealing with this entry
  + a bullet list (you are reading it)
+** Complex subtree for performance testing 			       :last:t1:t2:t3:t4:t5
+   :PROPERTIES:
+   :p1:       property1
+   :p2:       property1
+   :p3:       property1
+   :Effort:   Example of Effort Property
+   :CATEGORY: test
+   :END:
 
+:d1:
+A free content drawer
+:END:
+:d2:
+A second drawer with free contente
+:END:
+I am a complex subtree with a lot of stuff inside
+I have a table
+| Nice 3 Column | table | is here |
+|---------------+-------+---------|
+|               |       |         |
+I have a bunch of tags and a long list of properties.
+For children pleasure, I spot also a long list of #+ special org commands...
+#+HERE TO GIVE TROUBLES
+#+DRAWERS: d1 d2
+#+ME TOO HERE TO GIVE TROUBLES
 

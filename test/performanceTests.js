@@ -52,6 +52,18 @@ vows.describe('OrgMode API Stability').addBatch({
 		var timeTaken=Date.now()-startTime;
 		var nodesPerSeconds= 1000* (orgNodesList.length/timeTaken);	
 		console.log("toOrgString() per seconds:"+nodesPerSeconds);
+	    },
+	    'OrgQuery building time':function(orgNodesList,performance){
+		var startTime=Date.now();
+		// Trick: we will make a big father here
+		_.each(orgNodesList, function (n){
+			n.level=n.level+2;
+		});
+		orgNodesList[0].level=1;
+		var q= new orgParser.OrgQuery(orgNodesList);
+		console.log("Query Parser build time of "+orgNodesList.length+" Nodes:"+(Date.now()-startTime)+"ms");
+		var bigSubtree=q.selectSubtree(orgNodesList[0]);
+		console.log("Big Subtree size="+bigSubtree.length);
 	    }
 	    
 	    

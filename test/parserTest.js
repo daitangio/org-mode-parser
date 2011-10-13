@@ -7,8 +7,6 @@ var orgParser=require("../lib/org-mode-parser");
 // To understand how the parser works, uncomment the following:
 // orgParser.enableDebug();
 
-// The temp file used for some performance tests...
-var tempFileName="./test/bigTestFile.org.tmp";
 
 // Create a Test Suite
 vows.describe('OrgMode Tests').addBatch({
@@ -213,7 +211,7 @@ vows.describe('OrgMode Tests').addBatch({
 	    },
 	    'three node parser is right':function(n,unused){
 		//console.dir(n);
-		assert.equal(n.length, 4);
+		assert.equal(n.length, 5);
 	    },
 	    'headers are right':function(n,u){
 		assert.equal(n[0].headline,"Level one");
@@ -306,8 +304,8 @@ vows.describe('OrgMode Tests').addBatch({
 		});
 	    },
 	    'subtree without params return all nodes':function(ofd,u){
-		assert.equal(ofd.selectSubtree().length,4);
-		assert.equal(ofd.selectSubtree(null).length,4);
+		assert.equal(ofd.selectSubtree().length,5);
+		assert.equal(ofd.selectSubtree(null).length,5);
 	    },
 	    'subtree works/1':function(ofd,nodes){
 		var n1=ofd.selectSubtree()[0];
@@ -400,7 +398,7 @@ vows.describe('OrgMode Tests').addBatch({
 	    'rejectTag':function(){
 		orgParser.makelist("./test/treeLevel.org",function(nodes){
 		    var ofd=new orgParser.OrgQuery(nodes);
-		    var firstHeader=ofd.rejectTag('complex').rejectTag('last').rejectTag('nodata');
+		    var firstHeader=ofd.rejectTag('complex').rejectTag('last').rejectTag('nodata');		   
 		    assert.equal(firstHeader.length,1);
 		    assert.equal(firstHeader.first().headline,"Level one");
 		});
@@ -450,45 +448,6 @@ vows.describe('OrgMode Tests').addBatch({
 
 	
 	} //basic
-,
-	'Simple Performance Testing':{
-	    topic: function(){
-		
-		var fs=require('fs');
-		var stuffToDuplicate=fs.readFileSync("./test/treeLevel.org",'utf-8');
-		
-		for(var i=1; i<=9; i++){	
-		    //console.log(stuffToDuplicate);
-		    stuffToDuplicate +=stuffToDuplicate;
-		}
-		
-		orgParser.makelistFromStringWithPerformance(stuffToDuplicate,this.callback,true);
-	    },
-
-	    'Huge string Loading performance':function(nodelist,performance){		    
-		
-		/** Examples with max i= 15 we got
-		    msPerNode: 0.09316...
-		 */
-		var success=performance.nodesPerSeconds>10000;
-		if(!success ){		   
-		  console.dir(performance);  
-		} //else console.dir(performance);  
-		assert.isTrue(success);	
-	    },
-	    'Regen Time performance':function(orgNodesList,performance){
-		var s="";
-		var startTime=Date.now();
-		_.each(orgNodesList, function (nx){
-			   s+=nx.toOrgString();
-		});
-		var timeTaken=Date.now()-startTime;
-		var nodesPerSeconds= 1000* (orgNodesList.length/timeTaken);	
-		console.log("toOrgString() per seconds:"+nodesPerSeconds);
-	    }
-	    
-	    
-	}
 
 
 }).export(module); // Export it
