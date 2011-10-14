@@ -8,14 +8,15 @@ tagVersion=$($binDir/findOutDeployTag $binDir/../README.org)
 $(dirname $0)/installationTest || exit 1000
 echo Check the status
 git commit  --dry-run -a -m "Riepilogo" || echo ""
-read -e  -p 'Proceed (y/n)?' -i y reply
-test "$reply" != "y"  && exit
-echo Commit...
-git status
-
-# git commit -a -v  -m "Delivered tag revision $tagVersion" || echo "?Nothing to commit"
-# git tag -a -m "Revision $tagVersion"  $tagVersion
-# git tag
-# git push -v --tags
-# git push -v
-# npm publish
+#git status
+if [ "$1" == "push" ]; then
+    read -e  -p 'Proceed (y/n)?' -i y reply
+    test "$reply" != "y"  && exit
+    echo Commit...
+    git commit -a -v  -m "Delivered tag revision $tagVersion" || echo "?Nothing to commit"
+    git tag -a -m "Revision $tagVersion"  $tagVersion
+    git tag
+    git push -v --tags
+    git push -v
+    npm publish
+fi

@@ -5,7 +5,6 @@ This node.js module implements a [[http://orgmode.org/][org-mode]] file format p
 Org-mode is a cool Emacs package let you structuring information in a nice way, 
 and exporting it in html, latex, pdf and so on
 
-
 ** What does it basically do org-mode-parser I either couldn't do before?
 I was unable to find a JavaScript parser for org-mode. Now we have one.
 Org-mode is so useful you will start writing your data in org-mode instead of text files for everything
@@ -15,7 +14,9 @@ It is also _XML-free_ and yes, we like it  :)
 ** what are its key benefits?
 A lot of unit testing (over 90) and a pretty fast parser (see below).
 Also, it has minimal requirements.
-
+** Where can I find more news?
+Take a look to http://gioorgi.com/tag/org-mode-parser/
+for latest news
 ** Installation
 On a shell, which can run node, try out:
 #+BEGIN_SRC shell
@@ -29,27 +30,30 @@ npm install org-mode-parser
 # for the syntax of BEGIN_SRC :tangle, 
 # anyway org-babel-tangle
 # will export this source
-#+BEGIN_SRC javascript -n -r  :tangle basic-example.js
-var orgParser=require('org-mode-parser');
-orgParser.makelist("README.org", function (nodelist){
+#+BEGIN_SRC javascript -n -r  :tangle examples/basic-example.js
+var org=require('../lib/org-mode-parser');
+org.makelist("README.org", function (nodelist){
    // Here nodelist is a list of Orgnode objects (ref:putyourcode)
-   console.dir(nodelist);
+   console.dir(nodelist[0]);
 });
 #+END_SRC
 In the line [[(putyourcode)]] you are free to process the nodes in order.
 
 * API
-The main entry point is the makelist function, which accept a filename and a callback function.
+The main entry point is the makelist function, which accepts a filename and a callback function.
 makelist() will pass to the function the list of parsed nodes as first parameter, as described in the [[openening Example]]
 
 You can optionally build a query object called OrgQuery to easily select subtree,
 searching tags, et cetera:
 
-#+BEGIN_SRC javascript -n -r
-orgParser.makelist("./test/treeLevel.org",function(nodes){
-	var ofd=new orgParser.OrgQuery(nodes);
-	//  ofd is a complex object wiith let you do query and so on
-});
+#+BEGIN_SRC javascript -n -r :tangle examples/org-query-example.js
+  var org=require('../lib/org-mode-parser');
+  org.makelist("./test/treeLevel.org",function(nodes){
+      var ofd=new org.OrgQuery(nodes);
+      //  ofd is a complex object wiith let you do query and so on
+      console.log(ofd.selectTag('complex').first().toOrgString());
+  });
+  
 #+END_SRC
 
 Supported methods of OrgQuery are:
@@ -72,9 +76,6 @@ for more usage examples, and do not miss the [[FAQ]]
 The input must be a well formed org-mode file. 
 Parser can detect some corruptions, but it is not provided a specific sanity check.
 
-** Where can I find stable packages?
-On npm repository. 
-Github's latest checkout is the developement version, to use it at your own risk.
 
 * Design Goals
 
@@ -89,9 +90,14 @@ Github's latest checkout is the developement version, to use it at your own risk
     Org-mode-parser depends only on two packages, underscore ad vows. Vows dependency is used only 
     for regression tests, so the parser really depends only on underscore.
 ** Tests are documentation.
-    Please look at test/parserTest.js file for usage example.
-    Tests are commenteted and pretty self explanatory
+   Take a look to the examples/ directory for some tiny examples
+   Please look at test/parserTest.js file for API usage examples
+   Tests are commenteted and pretty self explanatory
 * FAQ
+** Where can I find stable packages?
+On npm repository. 
+Github's latest checkout is the developement version, to use it at your own risk.
+
 ** Who is my best friend?
 OrgQuery is a very handy object, because allow you to filter nodes in a structured way.
 Use it instead of hand-parsing
@@ -106,17 +112,20 @@ Also undeclared drawer are not indented accordingly!
 
 ** Querying Questions
 *** How can I find all the subnodes of node tagged releaseNotes and the query it?
-#+BEGIN_SRC javascript
-var q=new parser.OrgQuery(nl);
-var subtree=q.selectSubtree(q.selectTag('releaseNotes').first());
-subtree.selectTag('dev').first().headline; 
+#+BEGIN_SRC javascript  -n -r :tangle examples/org-query-example2.js
+  var org=require('../lib/org-mode-parser');
+  org.makelist("./README.org",function(nl){
+      var q=new org.OrgQuery(nl);
+      var subtree=q.selectSubtree(q.selectTag('releaseNotes').first());
+      console.log("Dev version is:"+subtree.selectTag('dev').first().headline); 
+  });
+  
 #+END_SRC
-
+    
 * RELEASE NOTES :releaseNotes:
-** ORG_MODE_PARSER_0.0.7 :dev:
-
-
-
+** TODO ORG_MODE_PARSER_0.0.8						::
+Work in progress right now
+** ORG_MODE_PARSER_0.0.7						:dev:
 *** Stringent selectSubtree API (BUGFIX).
 anOrgQuery.selectSubtree(i)  now will accept only these types of i objects:
  + A Orgnode
@@ -131,7 +140,6 @@ which is a bit naif, but it will not break the existing API.
 Evaluted the option of omitting first() on mono results, but API gets dirty. 
 For play with it, see commit tag dev_orgquery_one_node_merge  (6dd58da5e3a90e3f651bba4949cbe7b95155bc6b)
 and serch for the use of the "mergeFrom" method, now disabled.
-
 
 ** ORG_MODE_PARSER_0.0.6					  :published:
 Minor documentation fixes
