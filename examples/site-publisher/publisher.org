@@ -1,20 +1,21 @@
+-*- mode: org ; mode: visual-line; -*- -*
 * Publisher File: Introduction
-#+STARTUP: hidestars
+
 The best way of publishing a org-mode based web site is to use the org-mode html publishing feature.
 So nodejs will end up 
  + serving static stuff
  + monitoring files and regenerating them with emacs
 
 
-This file generate a set of config files and one script to batch-publish itself.
-To re-generate the configs and the script issue the
+This file generate a set of files and scripts  to batch-publish the org file inside the org directory. 
+To try it out, issue
+ bash publish.sh
+command from the shell
+
+* How it works
+To re-generate the configs and the script issue the emacs command:
 org-babel-tangle
-command
-
-This file contains /also/ the setup data
-
-The org mode publisher is optimized and will not regenerate unmodified files.
-This is very handy because will avoid slowing down the system
+when visiting this file.
 
 
 The code layout is taken from
@@ -22,6 +23,12 @@ http://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
 
 The website is stored in the org directory
 The generated files are stored in public_html
+
+The org mode publisher is optimized and will not regenerate unmodified files.
+This is very handy because will avoid slowing down the system
+
+** Config files
+
 
 
 #+BEGIN_SRC sh -n -r :tangle publish.sh
@@ -79,6 +86,7 @@ The generated files are stored in public_html
   
 #+END_SRC
 
+** Publish config shared by all org files
 
 #+TITLE:     PublishConfig
 #+AUTHOR:    Giovanni Giorgi
@@ -89,7 +97,7 @@ The generated files are stored in public_html
 #+LANGUAGE:  en
 #+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
-#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+INFOJS_OPT: view:content toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+LINK_UP:   
