@@ -1,0 +1,4 @@
+#+SETUPFILE: ~/org-mode-parser/examples/site-publisher/publisher.org
+#+TITLE: Page2
+* Page 2 example
+Example of page2

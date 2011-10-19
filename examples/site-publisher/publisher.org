@@ -1,0 +1,97 @@
+* Publisher File: Introduction
+#+STARTUP: hidestars
+The best way of publishing a org-mode based web site is to use the org-mode html publishing feature.
+So nodejs will end up 
+ + serving static stuff
+ + monitoring files and regenerating them with emacs
+
+
+This file generate a set of config files and one script to batch-publish itself.
+To re-generate the configs and the script issue the
+org-babel-tangle
+command
+
+This file contains /also/ the setup data
+
+The org mode publisher is optimized and will not regenerate unmodified files.
+This is very handy because will avoid slowing down the system
+
+
+The code layout is taken from
+http://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
+
+The website is stored in the org directory
+The generated files are stored in public_html
+
+
+#+BEGIN_SRC sh -n -r :tangle publish.sh
+  #!/bin/bash
+  time emacs --batch --script doPublish.el
+#+END_SRC
+
+#+BEGIN_SRC elisp -n -r :tangle doPublish.el
+  ; The following code is needed if org-mode is installed under .emacs.d 
+  ; as in my config. 
+  ;;(add-to-list 'load-path "~/.emacs.d/org-7.7/lisp")
+  
+  (require 'org-publish)
+  (setq org-publish-project-alist
+        '(
+  
+          ;; ... add all the components here (see below)...
+          ("org-notes"
+           :base-directory "~/org-mode-parser/examples/site-publisher/org"
+           :base-extension "org"
+           :publishing-directory "~/org-mode-parser/examples/site-publisher/public_html"
+           :recursive t
+           :publishing-function org-publish-org-to-html
+           :headline-levels 4             ; Just the default for this project.
+           :auto-preamble t
+    
+           :auto-sitemap t                ; Generate sitemap.org automagically...
+           :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
+           :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
+           :sitemap-function org-publish-org-sitemap
+           )
+  
+          ("org-static"
+           :base-directory "~/org-mode-parser/examples/site-publisher/org"
+           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+           :publishing-directory "~/org-mode-parser/examples/site-publisher/public_html"
+           :recursive t
+           :publishing-function org-publish-attachment
+           )
+  
+          ("nodejsWebSiteExample" :components ("org-notes" "org-static"))
+  
+  
+          ))
+  
+  ;; Issue the publish command.
+  (org-publish (assoc "nodejsWebSiteExample" org-publish-project-alist))
+  (message "Site published")
+  ;; To publish all projects...
+  ;;(org-publish-all)
+  
+    
+  
+    
+  
+#+END_SRC
+
+
+#+TITLE:     PublishConfig
+#+AUTHOR:    Giovanni Giorgi
+#+EMAIL:     jj@gioorgi.com
+#+DATE:      2011-10-19 Wed
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:

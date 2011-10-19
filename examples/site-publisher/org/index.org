@@ -1,0 +1,15 @@
+#+SETUPFILE: ~/org-mode-parser/examples/site-publisher/publisher.org
+#+TITLE: Index Example
+
+* Index Example
+Hi, I am an example of the index of the site publisher
+Use the org-insert-export-options-template command to generte the export template
+#+INCLUDE: sitemap.org
+
+[[file:./page2.org]]
+
+Only linked pages are on sitemap
+
+** Heading 2
+
+

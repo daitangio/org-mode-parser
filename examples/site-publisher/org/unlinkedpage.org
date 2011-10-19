@@ -1,0 +1,5 @@
+#+SETUPFILE: ~/org-mode-parser/examples/site-publisher/publisher.org
+#+TITLE: I will be on sitemap
+* Unlinked page test
+I hope so
+#+INCLUDE: sitemap.org
