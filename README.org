@@ -1,4 +1,6 @@
-
+-*- mode: org ; mode: visual-line; -*- -*
+#+SETUPFILE: ~/.emacs.d/config.org
+#+TITLE:README.org
 * A Nodejs org mode parser module
 ** "So What?"
 This node.js module implements a [[http://orgmode.org/][org-mode]] file format parser.
@@ -78,7 +80,6 @@ Parser can detect some corruptions, but it is not provided a specific sanity che
 
 
 * Design Goals
-
 ** API Stability
     In general, every API described in the [[API]] section is here to stay. 
     Compatibility will be retained as much as possible in the future releases.
@@ -123,9 +124,10 @@ Also undeclared drawer are not indented accordingly!
 #+END_SRC
     
 * RELEASE NOTES :releaseNotes:
-** TODO ORG_MODE_PARSER_0.0.8						::
+** TODO ORG_MODE_PARSER_0.0.8						:dev:
 Work in progress right now
-** ORG_MODE_PARSER_0.0.7						:dev:
++ Added the examples/site-publisher example
+** ORG_MODE_PARSER_0.0.7						:published:
 *** Stringent selectSubtree API (BUGFIX).
 anOrgQuery.selectSubtree(i)  now will accept only these types of i objects:
  + A Orgnode
@@ -204,7 +206,7 @@ avoid using it directly with _.each(...)
 ** ORG_MODE_PARSER_0.0.1					  :published:
 First revision
 
-* Release command sequence / Kitchensink 		  :config:kitchensink:
+* Release command sequence / Kitchensink 		  :kitchensink:
 At the time of writing, the github repository is the master code repository
 
 1. Check the package.json version
@@ -215,19 +217,3 @@ At the time of writing, the github repository is the master code repository
 
 
 
-#Config
-#+TITLE:     README.org
-#+AUTHOR:    Giovanni Giorgi
-#+EMAIL:     jj@gioorgi.com
-#+DATE:      2011-10-04 Tue
-#+DESCRIPTION:
-#+KEYWORDS:
-#+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
-#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
-#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
-#+EXPORT_SELECT_TAGS: export
-#+EXPORT_EXCLUDE_TAGS: noexport
-#+LINK_UP:   
-#+LINK_HOME: 
-#+XSLT:
