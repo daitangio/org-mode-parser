@@ -6,7 +6,7 @@
     "author": "Giovanni Giorgi <jj@gioorgi.com>",
     "contributors" : [],    
     "main":"./lib/org-mode-parser",
-    "version": "0.0.7",
+    "version": "0.0.8",
 
     "directories" : { "test": "./test" },
     "scripts": {

@@ -97,7 +97,7 @@ Parser can detect some corruptions, but it is not provided a specific sanity che
 * FAQ
 ** Where can I find stable packages?
 On npm repository. 
-Github's latest checkout is the developement version, to use it at your own risk.
+<<Github>>'s latest checkout is the developement version, to use it at your own risk.
 
 ** Who is my best friend?
 OrgQuery is a very handy object, because allow you to filter nodes in a structured way.
@@ -119,9 +119,10 @@ Also undeclared drawer are not indented accordingly!
       var q=new org.OrgQuery(nl);
       var subtree=q.selectSubtree(q.selectTag('releaseNotes').first());
       console.log("Dev version is:"+subtree.selectTag('dev').first().headline); 
-  });
-  
+  });  
 #+END_SRC
+** SETUPFILE and INCLUDE are supported?
+No, at least at the moment.
     
 * RELEASE NOTES :releaseNotes:
 ** TODO ORG_MODE_PARSER_0.0.8						:dev:
@@ -205,6 +206,9 @@ avoid using it directly with _.each(...)
      which is a better syntax
 ** ORG_MODE_PARSER_0.0.1					  :published:
 First revision
+
+* Github
+https://github.com/daitangio/org-mode-parser
 
 * Release command sequence / Kitchensink 		  :kitchensink:
 At the time of writing, the github repository is the master code repository
