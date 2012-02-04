@@ -1,6 +1,19 @@
 -*- mode: org ; mode: visual-line; -*- -*
 #+SETUPFILE: ~/.emacs.d/config.org
 #+TITLE:README.org
+
+
+
+* =client-side-rendering= branch (using org-mode-parser without node.js)
+
+  we will track daitangio's master branch for core changes, and use a noninvasive way to plug-and-play the core library, client side.
+  
+** working test setup
+
+   - see =examples/clientside.html= for the current working demo
+   - chdir to the org-mode-parser project root and run your =python -m SimpleHTTPServer= (vanilla chromium disallows xmlhttprequest to a file:///)
+   - visit =localhost:8000/examples/clientside.html=
+
 * A Nodejs org mode parser module
 ** "So What?"
 This node.js module implements a [[http://orgmode.org/][org-mode]] file format parser.
