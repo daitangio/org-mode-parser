@@ -34,6 +34,7 @@
     </script>
     <script type="text/javascript" charset="utf-8" src="https://raw.github.com/documentcloud/underscore/master/underscore-min.js"></script>
     <script type="text/javascript" charset="utf-8" src="../lib/org-mode-parser.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../lib/plugin-tohtml.js"></script>
     <script type="text/javascript" charset="utf-8">
         TESTFILE = "../test/tortureTest.org"
         makelist(TESTFILE, function(nodes) {
@@ -43,11 +44,17 @@
 
         function render(oq, target) {
             console.log("rendering into", target, "...")
-            target.innerHTML = oq.toOrgString()
+            // i absolutely hate css
+            target.innerHTML =
+              "<table width='100%' border='2'><tr><td width='50%' valign='top'>" +
+              oq.toHTML() +
+              "</td><td valign='top'><pre style='overflow: scroll; white-space: pre-wrap;'>"+
+              oq.toOrgString() +
+              "</pre></td></tr></table>"
         }
     </script>
 </head>
 <body>
-    <pre id="content"></pre>
+    <div id="content"></div>
 </body>
 </html>
