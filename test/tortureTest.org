@@ -28,6 +28,11 @@ above is the default options template (=C-c C-e t=)
   
   :fix_me:
 
+  it turns out the parser balked because of the property drawer usage
+  below, used to be :PROPERTIES:, now named :MYDRAWER:; formerly the
+  parser balked because it expected property lists within the property
+  drawer
+
 # another comment
 
 * markup test
@@ -52,7 +57,7 @@ HR should appear above:
 interspersed [[file:ruby.org][ruby]] link
 
 *** subheading with drawer
-    :PROPERTIES:
+    :MYDRAWER:
     inside the drawer
     :END:
     outside the drawer
