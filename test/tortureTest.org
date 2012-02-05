@@ -22,6 +22,8 @@ above is the default options template (=C-c C-e t=)
 
 * odd behavior {}[]() ::: /\
   
+  headline above doesn't render anything after the :::, might be because it looks like tag syntax
+
   removing the token below or using non-underscore separators breaks the parser:
   
   :fix_me:
