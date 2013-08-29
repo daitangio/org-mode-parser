@@ -91,17 +91,17 @@ Parser can detect some corruptions, but it is not provided a specific sanity che
     Org-mode-parser depends only on two packages, underscore ad vows. Vows dependency is used only 
     for regression tests, so the parser really depends only on underscore.
 ** Tests are documentation.
-   Take a look to the examples/ directory for some tiny examples
-   Please look at test/parserTest.js file for API usage examples
-   Tests are commenteted and pretty self explanatory
+   Take a look to the examples/ directory for some tiny examples.
+   Please look at test/parserTest.js file for API usage examples.
+   Tests are commenteted and pretty self explanatory: they are the primary source for correctness of this module.
 * FAQ
 ** Where can I find stable packages?
 On npm repository. 
 <<Github>>'s latest checkout is the developement version, to use it at your own risk.
 
 ** Who is my best friend?
-OrgQuery is a very handy object, because allow you to filter nodes in a structured way.
-Use it instead of hand-parsing
+OrgQuery is a very handy object (see below), because allow you to filter nodes in a structured way.
+Use it instead of hand-parsing.
 
 ** How can I get rid of archived nodes?
 Use the OrgQuery.rejectArchived() method
@@ -128,6 +128,7 @@ No, at least at the moment.
 ** TODO ORG_MODE_PARSER_0.0.8						:dev:
 Work in progress right now
 + Added the examples/site-publisher example
++ Planned migration to latest node version
 ** ORG_MODE_PARSER_0.0.7						:published:
 *** Stringent selectSubtree API (BUGFIX).
 anOrgQuery.selectSubtree(i)  now will accept only these types of i objects:
@@ -136,7 +137,9 @@ anOrgQuery.selectSubtree(i)  now will accept only these types of i objects:
  + empty/null
 
 /Keep in mind the following rule for understanding the behavior:/
- q.selectSubtree(emptyNodeList) === q.selectSubtree(null) == q.selectSubtree() === q
+
+q.selectSubtree(emptyNodeList) === q.selectSubtree(null) == q.selectSubtree() === q
+
 which is a bit naif, but it will not break the existing API.
 
 *** Magic avoided
