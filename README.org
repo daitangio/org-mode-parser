@@ -125,7 +125,8 @@ Also undeclared drawer are not indented accordingly!
 No, at least at the moment.
     
 * RELEASE NOTES :releaseNotes:
-** ORG_MODE_PARSER_0.0.8 						:dev:
+** ORG_MODE_PARSER_0.0.9 						:dev:
+** ORG_MODE_PARSER_0.0.8 						:published:
 + Added the examples/site-publisher example
 + Tested against latest node version
 + Removed direct dependecy from vows, only used for testing
