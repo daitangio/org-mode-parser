@@ -14,9 +14,8 @@
     },
     "repository"    : {"type": "git", "url": "git://github.com/daitangio/org-mode-parser.git"},  
 
-    "engines":{"node":">=0.4.12"},
+    "engines":{"node":">=0.10.17"},
     "dependencies": {    
-        "vows":">=0.5.11"
-      , "underscore":">=1.1.7"
+	"underscore":">=1.1.7"        
   }
 }

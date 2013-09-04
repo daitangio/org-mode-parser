@@ -125,10 +125,10 @@ Also undeclared drawer are not indented accordingly!
 No, at least at the moment.
     
 * RELEASE NOTES :releaseNotes:
-** TODO ORG_MODE_PARSER_0.0.8						:dev:
-Work in progress right now
+** ORG_MODE_PARSER_0.0.8 						:dev:
 + Added the examples/site-publisher example
-+ Planned migration to latest node version
++ Tested against latest node version
++ Removed direct dependecy from vows, only used for testing
 ** ORG_MODE_PARSER_0.0.7						:published:
 *** Stringent selectSubtree API (BUGFIX).
 anOrgQuery.selectSubtree(i)  now will accept only these types of i objects:
@@ -213,6 +213,10 @@ First revision
 * Github
 https://github.com/daitangio/org-mode-parser
 
+* Developing HOWTO
+Install globally vows and try out something like:
+npm install -g vows@0.7.0
+NODE_PATH=$(dirname $(which node))/../lib/node_modules:. ./bin/testme
 * Release command sequence / Kitchensink 		  :kitchensink:
 At the time of writing, the github repository is the master code repository
 
