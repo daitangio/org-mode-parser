@@ -126,6 +126,9 @@ No, at least at the moment.
     
 * RELEASE NOTES :releaseNotes:
 ** ORG_MODE_PARSER_0.0.9 						:dev:
++ API Change: IllegalArgumentException and ParseError disappears. They are replaced with simple Error object
+  because in node 0.10.x the toString() of the old objects was wrong.
+  /Parsing error are targeted to human beings, so avoid trapping them for complex recovery puropse/
 ** ORG_MODE_PARSER_0.0.8 						:published:
 + Added the examples/site-publisher example
 + Tested against latest node version

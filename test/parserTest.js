@@ -586,7 +586,7 @@ vows.describe('OrgMode BUGS').addBatch({
 			} catch (x) {
 			    util.isError(x);
 			    assert.isFalse(x instanceof TypeError);
-			    util.debug(x);
+			    // util.debug(x);
 			    // GOT, expected
 			    assert.equal(""+x,
 			    "Error: IllegalArgumentException: First arguments {nodes} cannot be Null or Undefined");
@@ -596,10 +596,10 @@ vows.describe('OrgMode BUGS').addBatch({
 		    }
 
 		    // API CHANGE:
-		    //, "IllegalArgumentException instead is thrown":function(f){
-		    // 	assert.throws(f,orgParser.IllegalArgumentException);
-		    // },
-		    // "IllegalArgumentException Exists":function (){
+		    , "An Error Object is thrown":function(f){
+		    	assert.throws(f,Error);
+		    }
+		    //, "IllegalArgumentException Exists":function (){
 		    // 	assert.isFalse(_.isUndefined(orgParser.IllegalArgumentException));
 		    // },
 		    // "ParseError Exists":function(){
