@@ -1,6 +1,7 @@
 var vows = require('vows'),
     assert = require('assert'),
-    _=require("underscore");
+    _=require("underscore"),
+    util=require('util');
 
 var orgParser=require("../lib/org-mode-parser");
 
@@ -583,20 +584,27 @@ vows.describe('OrgMode BUGS').addBatch({
 			try{
 			    f();
 			} catch (x) {
+			    util.isError(x);
 			    assert.isFalse(x instanceof TypeError);
-			    assert.isTrue(x instanceof orgParser.IllegalArgumentException);
+			    util.debug(x);
+			    // GOT, expected
+			    assert.equal(""+x,
+			    "Error: IllegalArgumentException: First arguments {nodes} cannot be Null or Undefined");
+			    //assert.isTrue(x instanceof orgParser.IllegalArgumentException);
 			}
 			
-		    },
-		    "IllegalArgumentException instead is thrown":function(f){
-			assert.throws(f,orgParser.IllegalArgumentException);
-		    },
-		    "IllegalArgumentException Exists":function (){
-			assert.isFalse(_.isUndefined(orgParser.IllegalArgumentException));
-		    },
-		    "ParseError Exists":function(){
-			assert.isFalse(_.isUndefined(orgParser.ParseError));
 		    }
+
+		    // API CHANGE:
+		    //, "IllegalArgumentException instead is thrown":function(f){
+		    // 	assert.throws(f,orgParser.IllegalArgumentException);
+		    // },
+		    // "IllegalArgumentException Exists":function (){
+		    // 	assert.isFalse(_.isUndefined(orgParser.IllegalArgumentException));
+		    // },
+		    // "ParseError Exists":function(){
+		    // 	assert.isFalse(_.isUndefined(orgParser.ParseError));
+		    // }
 
 		}
 
