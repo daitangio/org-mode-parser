@@ -1,12 +1,12 @@
 #!/bin/bash
-set -e
+set -e -x
 echo Testing install
 cdir=$(pwd)
-tempdir=../$$temp
+tempdir=/tmp/$$temp
 #npm install . -g -d
 mkdir $tempdir
 cd $tempdir
-npm install ../org-mode-parser -d
+npm install ${cdir}/../org-mode-parser -d
 npm ls 
 echo "a=require('org-mode-parser')" >tester.js
 node tester.js || echo "FAILED"
