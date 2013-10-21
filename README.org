@@ -32,7 +32,7 @@ npm install org-mode-parser
 # for the syntax of BEGIN_SRC :tangle, 
 # anyway org-babel-tangle
 # will export this source
-#+BEGIN_SRC javascript -n -r  :tangle examples/basic-example.js
+#+BEGIN_SRC js -n -r  :tangle examples/basic-example.js
 var org=require('../lib/org-mode-parser');
 org.makelist("README.org", function (nodelist){
    // Here nodelist is a list of Orgnode objects (ref:putyourcode)
