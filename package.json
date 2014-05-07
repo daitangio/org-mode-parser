@@ -17,5 +17,8 @@
     "engines":{"node":">=0.10.17"},
     "dependencies": {    
 	"underscore":">=1.1.7"        
-  }
+    },
+    "devDependencies": {
+      "vows": "^0.7.0"
+    }
 }
