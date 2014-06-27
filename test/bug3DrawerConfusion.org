@@ -1,0 +1,7 @@
+* Python
+** time
+#+BEGIN_SRC python
+from time import strftime
+strftime("%Y-%m-%d %H:%M:%S")
+=> '2014-06-06 13:50:52'
+#+END_SRC

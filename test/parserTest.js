@@ -765,5 +765,16 @@ vows.describe('OrgMode 0.0.5').addBatch({
 		assert.throws(fx,orgParser.ParseError);
 	}
 
+	,'Tests for Error: ParseError:  DRAWER :50: Found but :END: missed':{
+		topic: function(){
+			orgParser.makelist("./test/bug3DrawerConfusion.org",this.callback);
+		},
+		'parsing works':function(nodes,u){	
+			// Expected one master node
+			assert.isNotNull(nodes);			
+			//assert.equal(1,nodes.length);
+		}
+	}	
+
 
 }).export(module);
