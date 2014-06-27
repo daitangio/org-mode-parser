@@ -1,4 +1,4 @@
--*- mode: org ; mode: visual-line; -*- -*
+# -*- mode: org ; mode: visual-line; -*- -*
 #+SETUPFILE: ~/.emacs.d/config.org
 #+TITLE:README.org
 * A Nodejs org mode parser module
@@ -20,11 +20,15 @@ Also, it has minimal requirements.
 Take a look to http://gioorgi.com/tag/org-mode-parser/
 for latest news
 ** Installation
-On a shell, which can run node, try out:
-#+BEGIN_SRC shell
-curl http://npmjs.org/install.sh | sh
+The full installation can be obtained via the npm package respository
+On a shell, which can run node, try out these lines
+#+BEGIN_SRC shell :tangle fast-install.sh
+curl http://nodejs.org/dist/v0.10.28/node-v0.10.28.tar.gz | tar xzvf -
+(cd node-v0.10.28/ ;  ./configure --prefix=$HOME ; make && make install)
+curl --insecure https://www.npmjs.org/install.sh  | bash
 npm install org-mode-parser
 #+END_SRC
+or launch fast-install.sh
 
 ** Usage example:
 #<<opening Example>>
@@ -219,8 +223,11 @@ https://github.com/daitangio/org-mode-parser
 
 * Developing HOWTO
 Install globally vows and try out something like:
+#+BEGIN_SRC shell :tangle ./bin/run-test-suite.sh
 npm install -g vows@0.7.0
 NODE_PATH=$(dirname $(which node))/../lib/node_modules:. ./bin/testme
+#+END_SRC
+
 * Release command sequence / Kitchensink 		  :kitchensink:
 At the time of writing, the github repository is the master code repository
 
