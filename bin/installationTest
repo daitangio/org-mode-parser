@@ -6,7 +6,10 @@ tempdir=/tmp/$$temp
 #npm install . -g -d
 mkdir $tempdir
 cd $tempdir
-npm install ${cdir}/../org-mode-parser -d
+# Cygwin pactch:
+# /cygdrive/c/giorgi/code/org-mode-parser/../org-mode-parser
+cdir2=$(echo $cdir | awk '{gsub(/\/cygdrive\/c\//,"c:/"); print}')
+npm install ${cdir2}/../org-mode-parser -d
 npm ls 
 echo "a=require('org-mode-parser')" >tester.js
 node tester.js || echo "FAILED"

@@ -2,3 +2,5 @@ node_modules
 *~
 .monitor
 setup.sh
+obj/
+bin/Microsoft.NodejsTools.WebRole.dll

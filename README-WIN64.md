@@ -1,19 +1,22 @@
 # Installation under windows
 
-NodeJS has still a bunch of problems under Windows, so developing is still hard.
-In particular, npm try to build hard links and fail catastrophically.
+# With Visual Studio Community 2015
 
+1. Install the nodejs tools plugin for visual studio:
+https://github.com/Microsoft/nodejstools/
+2. Open the  OrgModeParser.sln file
+3. Under Tools/External Tools register the runVowsTest.cmd
+4. Drink a beer
+
+# Without Visual Studio 2015
 
 1. Download NodeJS (64bit suggested)
-2. Ensure the proxy is correctly configured:
-	npm config set proxy http://127.0.0.1:808
-	npm config set https-proxy http://127.0.0.1:808
-3. Install the dependencies GLOBALLY:
+2. Install the dependencies GLOBALLY:
 
 	npm  install -g vows@0.7.0
-	npm  install -g underscore@1.1.7
-	
-4. Manually set NODE_PATH and run unit tests:
+	npm  install -g underscore@1.8.3
+		
+4. run the test via the runVowsTest.cmd
 
-	set NODE_PATH=C:\Users\giorgig\AppData\Roaming\npm\node_modules
-	vows --spec -v --cover-plain  test\*.js	
+Performance on SonyVaio Intel-i5:
+Query Parser build time of 1280 Nodes:50ms
