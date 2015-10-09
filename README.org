@@ -129,7 +129,9 @@ Also undeclared drawer are not indented accordingly!
 No, at least at the moment.
     
 * RELEASE NOTES :releaseNotes:
-** ORG_MODE_PARSER_0.1.0                                                :dev:
+** ORG_MODE_PARSER_0.1.1                                                :dev:
+Republish (0.1.0  never see light)
+** ORG_MODE_PARSER_0.1.0                                          :published:
 + Visual Studio 2015 compatibility
 + Tested on node v0.12.2
 ** ORG_MODE_PARSER_0.0.9 						:published:
