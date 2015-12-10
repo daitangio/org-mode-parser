@@ -27,7 +27,7 @@
     <Compile Include="test\parserTest.js" />
     <Compile Include="test\performanceTests.js" />
     <Content Include="testme" />
-    <Content Include="runVowvsTest.cmd" />
+    <Content Include="runVowsTest.cmd" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin" />

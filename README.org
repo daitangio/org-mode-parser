@@ -129,7 +129,11 @@ Also undeclared drawer are not indented accordingly!
 No, at least at the moment.
     
 * RELEASE NOTES :releaseNotes:
-** ORG_MODE_PARSER_0.1.1                                                :dev:
+** ORG_MODE_PARSER_0.1.2                                                :dev:
+Code name: Tetzuya
++ Simple html rendering engine
++ Quickcheck for stronger unit test
+** ORG_MODE_PARSER_0.1.1                                                :published:
 Republish (0.1.0  never see light)
 ** ORG_MODE_PARSER_0.1.0                                          :published:
 + Visual Studio 2015 compatibility

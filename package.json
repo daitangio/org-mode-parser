@@ -1,24 +1,36 @@
 {
-    "name": "org-mode-parser",
-    "description": "A parser for the Emacs org-mode package. DRAWER and archive tag supported. Stronger API",
-    "homepage": "http://gioorgi.com/org-mode-parser",
-    "keywords": ["parser","util","org-mode","orgmode","emacs"],
-    "author": "Giovanni Giorgi <jj@gioorgi.com>",
-    "contributors" : [],    
-    "main":"./lib/org-mode-parser",
-    "version": "0.1.1",
-
-    "directories" : { "test": "./test" },
-    "scripts": {
-	"test": "vows --spec -v test/*.js"
-    },
-    "repository"    : {"type": "git", "url": "git://github.com/daitangio/org-mode-parser.git"},  
-
-    "engines":{"node":">=0.10.17"},
-    "dependencies": {    
-	"underscore":">=1.1.7"        
-    },
-    "devDependencies": {
-      "vows": "^0.7.0"
-    }
+  "name": "org-mode-parser",
+  "description": "A parser for the Emacs org-mode package. DRAWER and archive tag supported. Stronger API",
+  "homepage": "http://gioorgi.com/org-mode-parser",
+  "keywords": [
+    "parser",
+    "util",
+    "org-mode",
+    "orgmode",
+    "emacs"
+  ],
+  "author": "Giovanni Giorgi <jj@gioorgi.com>",
+  "contributors": [],
+  "main": "./lib/org-mode-parser",
+  "version": "0.1.1",
+  "directories": {
+    "test": "./test"
+  },
+  "scripts": {
+    "test": "vows --spec -v test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/daitangio/org-mode-parser.git"
+  },
+  "engines": {
+    "node": ">=0.10.17"
+  },
+  "dependencies": {
+    "underscore": ">=1.1.7"
+  },
+  "devDependencies": {
+      "vows": "^0.7.0",
+      "quickcheck": "0.0.4"
+  }
 }

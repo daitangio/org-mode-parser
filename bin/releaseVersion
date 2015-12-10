@@ -1,11 +1,17 @@
 #!/bin/bash
 # Internal housekeeping only
-# Example $0 ORG_MODE_PARSER_0.0.1
+# Syntax:
+# bin/releaseVersion [publish]
+# Without publish only checks
 set -e -x
 binDir=$(dirname $0)
 tagVersion=$($binDir/findOutDeployTag $binDir/../README.org)
 #echo $tagVersion
 $(dirname $0)/installationTest || exit 1000
+echo Check: declared version
+# "version": "0.1.1",
+grep version package.json
+exit
 echo Check the status
 git commit  --dry-run -a -m "Riepilogo" || echo ""
 #git status
