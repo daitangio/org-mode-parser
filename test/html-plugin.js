@@ -20,6 +20,27 @@ vows.describe('OrgMode Html plugin').addBatch({
                 var n=new orgParser.OrgQuery(orgParser.parseBigString("* Very Stupid\nData Line1\n"));		
                 assert.equal("<h1>Very Stupid</h1><p>Data Line1</p><p></p>",n.toHtml());
             }
+        },
+        'toHtml testing': {
+            topic: function () {
+                orgParser.makelist("./test/htmlTest.org", this.callback);
+            },
+            'begin_src test': function (n, unused) {
+                var q = new orgParser.OrgQuery(n);
+                var sc=q.selectTag("sourceCode");
+                //console.dir(sc);
+                //console.dir(sc.toHtml());                
+                assert.isNotNull(sc.toHtml().match(/[<]code class/));
+            },
+            'superhtml':function(n,unused){
+                var q = new orgParser.OrgQuery(n);
+                console.dir(q.toHtml());
+            }
+            
+            
+            
+
         }
+
     }
 }).export(module);

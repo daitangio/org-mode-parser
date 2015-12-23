@@ -13,7 +13,7 @@ Org-mode is so useful you will start writing your data in org-mode instead of te
 needing a bit of structuring.
 It is also _XML-free_ and yes, we like it  :)
 
-** what are its key benefits?
+** What are its key benefits?
 A lot of unit testing (over 90) and a pretty fast parser (see below).
 Also, it has minimal requirements.
 ** Where can I find more news?
@@ -56,7 +56,7 @@ searching tags, et cetera:
   var org=require('../lib/org-mode-parser');
   org.makelist("./test/treeLevel.org",function(nodes){
       var ofd=new org.OrgQuery(nodes);
-      //  ofd is a complex object wiith let you do query and so on
+      //  ofd is a complex object with let you do query and so on
       console.log(ofd.selectTag('complex').first().toOrgString());
   });
   
@@ -73,6 +73,10 @@ Supported methods of OrgQuery are:
  + each(functionToPassEach)
  + random()
    Extract a random element
+ + toHtml()
+   Generate a fair html rendering.
+   This code is not meant to replace org-mode export functionality,
+   but can be an handy friend.
 
 
 See the unit test section 'basicLibraries OrgQuery-Complex' on test/parseTest.js 
@@ -131,8 +135,14 @@ No, at least at the moment.
 * RELEASE NOTES :releaseNotes:
 ** ORG_MODE_PARSER_0.1.2                                                :dev:
 Code name: Tetzuya
+
 + Simple html rendering engine
-+ Quickcheck for stronger unit test
++ support for source block #+begin_src / #+end_src
++ Quickcheck for stronger unit test (only embrional setup)
+
+Potential break-change:
+Now unknown directive are *retained*
+
 ** ORG_MODE_PARSER_0.1.1                                                :published:
 Republish (0.1.0  never see light)
 ** ORG_MODE_PARSER_0.1.0                                          :published:
