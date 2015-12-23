@@ -18,6 +18,9 @@ this text doesn't render
 
 above is the default options template (=C-c C-e t=)
 
+* TODO TODO Test                                                   
+Must be the first node because no tag is used
+
 # a comment
 
 * odd behavior {}[]() ::: /\
@@ -78,6 +81,11 @@ interspersed [[file:ruby.org][ruby]] link
 
 #+end_src
 
+* Tag test                                                         :tagTest1:
+Simple tag test
+* TODO Tag master and TODO Test                                     :tagTest2:
+This node test the TODO and tag css class.
+# author: giovanni giorgi
 * an image.
 
   just the filepath (shows in iimage mode, exports to img):
