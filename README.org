@@ -73,10 +73,13 @@ Supported methods of OrgQuery are:
  + each(functionToPassEach)
  + random()
    Extract a random element
- + toHtml()
+ + toHtml(options)
    Generate a fair html rendering.
    This code is not meant to replace org-mode export functionality,
    but can be an handy friend.
+   For options usage example see 
+   test/to-html-test.js
+
 
 
 See the unit test section 'basicLibraries OrgQuery-Complex' on test/parseTest.js 
@@ -136,9 +139,14 @@ No, at least at the moment.
 ** ORG_MODE_PARSER_0.1.2                                                :dev:
 Code name: Tetzuya
 
-+ Simple html rendering engine
-+ support for source block #+begin_src / #+end_src
++ Simple html rendering engine. 
+  Jade is an optional requirement if you want to use it as template
+  engine.  
+  It is requiered on-demand. 
+  Anyway we suggest to install it 
++ Support for source block #+begin_src / #+end_src
 + Quickcheck for stronger unit test (only embrional setup)
+
 
 Potential break-change:
 Now unknown directive are *retained*

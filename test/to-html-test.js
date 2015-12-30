@@ -35,17 +35,22 @@ vows.describe('OrgMode Html plugin').addBatch({
                              ,sc.toHtml());
                 
             },
-            'tag css':function(n,unused){
+            'css tag':function(n,unused){
                 var q = new orgParser.OrgQuery(n);
                 assert.equal('<h1 class="section-number-1 tag tag-tagTest1" >Tag test</h1><p>Simple tag test\n</p>',
                              q.selectTag("tagTest1").toHtml());
             },
 
-            'tag css todo':function(n,unused){
+            'css todo and tag':function(n,unused){
                 var q = new orgParser.OrgQuery(n);
-                //console.dir(q.selectTag("tagTest2"));
                 assert.equal('<h1 class="section-number-1 todo todo-TODO tag tag-tagTest2" >Tag master and TODO Test</h1><p>This node test the TODO and tag css class.\n</p>',
                              q.selectTag("tagTest2").toHtml());
+            },
+            'full rendering':function(n,unused){
+                var fs=require("fs");
+                fs.writeFileSync( "./renderTest.html", (new orgParser.OrgQuery(n)).toHtml({
+                    fullHtml:true
+                }));
             }
             
             

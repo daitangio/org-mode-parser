@@ -261,7 +261,7 @@ vows.describe('OrgMode Tests').addBatch({
 	    },
 	    'node 2 has priority B and a STARTED Keyword':function(nodeList,u){
 		var n=nodeList[1];
-		console.dir(n);
+		//console.dir(n);
 		assert.equal(n.todo,"STARTED");
 		assert.equal(n.priority,"B");
 		assert.equal(n.tag,"veryHard");
