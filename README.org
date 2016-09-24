@@ -99,7 +99,7 @@ Parser can detect some corruptions, but it is not provided a specific sanity che
     We will keep an eye on performance.
     Please help us to stress the parser and find its true limit.
 ** Minimize dependency
-    Org-mode-parser depends only on two packages, underscore ad vows. Vows dependency is used only 
+    Org-mode-parser depends only on two packages, underscore and vows. Vows dependency is used only 
     for regression tests, so the parser really depends only on underscore.
 ** Tests are documentation.
    Take a look to the examples/ directory for some tiny examples.
