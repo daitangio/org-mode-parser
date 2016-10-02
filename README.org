@@ -3,138 +3,133 @@
 #+TITLE:README.org
 * A Nodejs org mode parser module
 ** "So What?"
-This node.js module implements a [[http://orgmode.org/][org-mode]] file format parser.
-Org-mode is a cool Emacs package let you structuring information in a nice way, 
-and exporting it in html, latex, pdf and so on
+   This node.js module implements an [[http://orgmode.org/][org-mode]] file format parser.
+   Org-mode is a cool Emacs package that lets you structure
+   information in a nice way, and export it in html, latex, pdf and so
+   on.
+** What does org-mode-parser do that I couldn't do before?
+   I was unable to find a JavaScript parser for org-mode. Now we have
+   one.  Org-mode is so useful you will start writing in org-mode
+   instead of text files for everything needing a bit of structuring.
 
-** What does it basically do org-mode-parser I either couldn't do before?
-I was unable to find a JavaScript parser for org-mode. Now we have one.
-Org-mode is so useful you will start writing your data in org-mode instead of text files for everything
-needing a bit of structuring.
-It is also _XML-free_ and yes, we like it  :)
-
-** What are its key benefits?
-A lot of unit testing (over 90) and a pretty fast parser (see below).
-Also, it has minimal requirements.
+   It is also _XML-free_ and yes, we like it  :)
+** What are further benefits?
+   A lot of unit testing (over 90) and a pretty fast parser (see
+   below).  Also, it has minimal requirements.
 ** Where can I find more news?
-Take a look to http://gioorgi.com/tag/org-mode-parser/
-for latest news
+   Take a look at http://gioorgi.com/tag/org-mode-parser/ for latest
+   news
 ** Installation
-The full installation can be obtained via the npm package respository
-On a shell, which can run node, try out these lines
-#+BEGIN_SRC shell :tangle fast-install.sh
+   The full installation can be obtained via the npm package
+   repository On a shell which can run node, try out these lines:
+   #+BEGIN_SRC shell :tangle fast-install.sh
 curl http://nodejs.org/dist/v0.10.28/node-v0.10.28.tar.gz | tar xzvf -
 (cd node-v0.10.28/ ;  ./configure --prefix=$HOME ; make && make install)
 curl --insecure https://www.npmjs.org/install.sh  | bash
 npm install org-mode-parser
-#+END_SRC
-or launch fast-install.sh
-
+   #+END_SRC
+   or launch fast-install.sh
 ** Usage example:
-#<<opening Example>>
-# Look  http://orgmode.org/manual/Code-block-specific-header-arguments.html
-# for the syntax of BEGIN_SRC :tangle, 
-# anyway org-babel-tangle
-# will export this source
-#+BEGIN_SRC js -n -r  :tangle examples/basic-example.js
+   # Look at
+   # http://orgmode.org/manual/Code-block-specific-header-arguments.html
+   # for the syntax of BEGIN_SRC :tangle. Anyway, org-babel-tangle
+   # will export this source
+   #+BEGIN_SRC js -n -r  :tangle examples/basic-example.js
 var org=require('../lib/org-mode-parser');
 org.makelist("README.org", function (nodelist){
    // Here nodelist is a list of Orgnode objects (ref:putyourcode)
    console.dir(nodelist[0]);
 });
-#+END_SRC
-In the line [[(putyourcode)]] you are free to process the nodes in order.
-
+   #+END_SRC
 * API
-The main entry point is the makelist function, which accepts a filename and a callback function.
-makelist() will pass to the function the list of parsed nodes as first parameter, as described in the [[openening Example]]
+  The parser's main entry point is the makelist function, which accepts
+  a filename and a callback function. makelist() will pass to the
+  function the list of parsed nodes as first parameter, as described in
+  the [[opening example]].
 
-You can optionally build a query object called OrgQuery to easily select subtree,
-searching tags, et cetera:
+  You can optionally build a query object called OrgQuery to easily
+  select subtree, search tags, et cetera:
 
-#+BEGIN_SRC javascript -n -r :tangle examples/org-query-example.js
+  #+BEGIN_SRC javascript -n -r :tangle examples/org-query-example.js
   var org=require('../lib/org-mode-parser');
   org.makelist("./test/treeLevel.org",function(nodes){
       var ofd=new org.OrgQuery(nodes);
-      //  ofd is a complex object with let you do query and so on
+      // ofd is a complex object for use in querying and so on
       console.log(ofd.selectTag('complex').first().toOrgString());
   });
-  
-#+END_SRC
+  #+END_SRC
 
-Supported methods of OrgQuery are:
- + selectSubtree(node)
-   Extract the nodes hierarchically below the given input
- + selectTag(tagString)
- + sortBy
- + reject(function)
- + rejectTag(tagName)
- + toArray()
- + each(functionToPassEach)
- + random()
-   Extract a random element
- + toHtml(options)
-   Generate a fair html rendering.
-   This code is not meant to replace org-mode export functionality,
-   but can be an handy friend.
-   For options usage example see 
-   test/to-html-test.js
+  Supported methods of OrgQuery are:
+  + selectSubtree(node)
+    Extract the nodes hierarchically below the given input
+  + selectTag(tagString)
+  + sortBy
+  + reject(function)
+  + rejectTag(tagName)
+  + toArray()
+  + each(functionToPassEach)
+  + random()
+    Extract a random element
+  + toHtml(options)
+    Generate a fair html rendering.
+    This code is not meant to replace org-mode export functionality,
+    but can be an handy friend.
+    For options usage example see
+    test/to-html-test.js
 
-
-
-See the unit test section 'basicLibraries OrgQuery-Complex' on test/parseTest.js 
-for more usage examples, and do not miss the [[FAQ]]
-
+  See the unit test section 'basicLibraries OrgQuery-Complex' on
+  test/parseTest.js for more usage examples, and do not miss the [[FAQ]]
 ** Known Defects?
-The input must be a well formed org-mode file. 
-Parser can detect some corruptions, but it is not provided a specific sanity check.
-
-
+   The input must be a well-formed org-mode file.  Parser can detect some
+   corruptions, but it does not provide a complete sanity check.
 * Design Goals
 ** API Stability
-    In general, every API described in the [[API]] section is here to stay. 
-    Compatibility will be retained as much as possible in the future releases.
+   In general, every API component described in the [[API]] section is
+   here to stay.  Compatibility will be retained as far as possible in
+   future releases.
 ** Performance
-    At the time of writing, the parser is pretty fast. On a Linux virtualized machine, we get about 20.000 nodes per seconds.
-    We will keep an eye on performance.
-    Please help us to stress the parser and find its true limit.
+   At the time of writing, the parser is pretty fast. On a Linux
+   virtual machine, we get about 20.000 nodes per seconds.  We will
+   keep an eye on performance.
+
+   You are welcome to help us stress test the parser and find its true
+   limits.
 ** Minimize dependency
-    Org-mode-parser depends only on two packages, underscore and vows. Vows dependency is used only 
-    for regression tests, so the parser really depends only on underscore.
-** Tests are documentation.
-   Take a look to the examples/ directory for some tiny examples.
+   Org-mode-parser depends only on two packages, underscore and
+   vows. Vows dependency is used only for regression tests, so the
+   parser really depends only on underscore.
+** Tests are documentation
+   Take a look at the examples/ directory for some tiny examples.
    Please look at test/parserTest.js file for API usage examples.
-   Tests are commenteted and pretty self explanatory: they are the primary source for correctness of this module.
+   Tests are commented and pretty self-explanatory: they are the
+   primary source for correctness of this module.
 * FAQ
 ** Where can I find stable packages?
-On npm repository. 
-<<Github>>'s latest checkout is the developement version, to use it at your own risk.
-
+   On npm repository. [[https://github.com/daitangio/org-mode-parser/tree/master][The master branch on GitHub]] is the development
+   version, so use it at your own risk.
 ** Who is my best friend?
-OrgQuery is a very handy object (see below), because allow you to filter nodes in a structured way.
-Use it instead of hand-parsing.
-
+   OrgQuery is a very handy object (see below), because it allows you
+   to filter nodes in a structured way. Use it instead of
+   hand-parsing.
 ** How can I get rid of archived nodes?
-Use the OrgQuery.rejectArchived() method
-
-** Undeclared drawer are parsed?
-Yes, but org mode wants them to be declared (see par 2.9 Drawers on documentation).
-So do not relay on undeclared drawers, because we can change the parser to be more stringent.
-Also undeclared drawer are not indented accordingly!
-
+   Use the OrgQuery.rejectArchived() method
+** Are undeclared drawers parsed?
+   Yes, but org mode wants them to be declared (see par 2.9 Drawers on
+   documentation). Thus, it is best to not rely on undeclared drawers,
+   because the parser could change in the future to be more
+   stringent. Also, undeclared drawers are not indented!
 ** Querying Questions
-*** How can I find all the subnodes of node tagged releaseNotes and the query it?
+*** How can I find all the subnodes of the node tagged releaseNotes and query it?
 #+BEGIN_SRC javascript  -n -r :tangle examples/org-query-example2.js
   var org=require('../lib/org-mode-parser');
   org.makelist("./README.org",function(nl){
       var q=new org.OrgQuery(nl);
       var subtree=q.selectSubtree(q.selectTag('releaseNotes').first());
-      console.log("Dev version is:"+subtree.selectTag('dev').first().headline); 
-  });  
+      console.log("Dev version is:"+subtree.selectTag('dev').first().headline);
+  });
 #+END_SRC
-** SETUPFILE and INCLUDE are supported?
-No, at least at the moment.
-    
+** Do you support SETUPFILE and INCLUDE?
+   No, at least not at the moment.
 * RELEASE NOTES :releaseNotes:
 ** ORG_MODE_PARSER_0.1.2                                                :dev:
 Code name: Tetzuya
@@ -247,25 +242,19 @@ avoid using it directly with _.each(...)
 First revision
 
 * Github
-https://github.com/daitangio/org-mode-parser
-
-* Developing HOWTO
-Install globally vows and try out something like:
-
+  https://github.com/daitangio/org-mode-parser
+* Development HOWTO
+  Globally install vows and try out something like:
 
 #+BEGIN_SRC shell :tangle ./bin/run-test-suite.sh
 npm install -g vows@0.7.0
 NODE_PATH=$(dirname $(which node))/../lib/node_modules:. ./bin/testme
 #+END_SRC
-
 * Release command sequence / Kitchensink 		  :kitchensink:
-At the time of writing, the github repository is the master code repository
+  At the time of writing, the github repository is the master code repository
 
-1. Check the package.json version
-2. Issue the following commands:
-#+BEGIN_SRC shell
+  1. Check the package.json version
+  2. Issue the following commands:
+  #+BEGIN_SRC shell
 ./bin/releaseVersion.sh ORG_MODE_PARSER_0.0.6
-#+END_SRC
-
-
-
+  #+END_SRC
