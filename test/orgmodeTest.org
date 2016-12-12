@@ -31,6 +31,8 @@ and could also be 'truncated' like in the section below
 * Section 7 is like section 6 but only with a starting CLOCK
   CLOCK: [2011-10-04 Tue 16:41]
 Text expected for Section 7
+* DONE Section 8 with schedule, deadline and closed
+DEADLINE: <2011-11-30 Wed> SCHEDULED: <2011-11-01 Tue> CLOSED: <2011-11-29>
 * Test Tree                                                   :test:testRoot:
 ** Unit Test Subtree Section 		       :test:eventsLits:testTreeRoot:
 :PROPERTIES:
