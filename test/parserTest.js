@@ -249,7 +249,7 @@ vows.describe('OrgMode Tests').addBatch({
 	    },
 
 	    'nodes parsing count is right':function(nodeList,u){		
-		assert.equal(12,nodeList.length);
+		assert.equal(13,nodeList.length);
 	    },
 	    'first node heading is right':function(nodeList,u){
 		assert.equal(nodeList[0].headline,"Test Node 1");
@@ -279,6 +279,13 @@ vows.describe('OrgMode Tests').addBatch({
 		assert.isNotNull(nl[4].schedule);
 		assert.isNotNull(nl[4].deadline);
 	    },
+      'Node 8 is DONE and has deadline, schedule and closed':function (nl,u){
+    assert.equal(nl[7].headline,"Section 8 with schedule, deadline and closed");
+    assert.isNotNull(nl[7].schedule);
+    assert.isNotNull(nl[7].deadline);
+    assert.isNotNull(nl[7].closed);
+    assert.equal(nl[7].todo,"DONE");
+      },
 	    'Node 3 body is right':function(nl,u){
 		assert.equal(nl[2].headline,"Section 3 with SCHEDULED");
 		assert.equal(nl[2].body,"This section has a schedule for the end of 2012, a very bad date someone said.\nTrust no one\n");
