@@ -1,0 +1,11 @@
+* 2016 Contributors
+OrgMode Parser major contributors:
+1. aviav
+2. Giovanni Giorgi
+3. guozhen
+4. Kev Zettler 
+5. Matt Lavin 
+6. natto 
+7. nomosyn 
+8. thesebas
+
