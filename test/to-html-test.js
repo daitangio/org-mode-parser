@@ -31,7 +31,7 @@ vows.describe('OrgMode Html plugin').addBatch({
                 //console.dir(sc);
                 //console.dir(sc.toHtml());
                 // assert.isNotNull(sc.toHtml().match(/[<]code class/));
-                assert.equal('<h2 class="section-number-2 tag tag-sourceCode" >source code</h2><p>\n<code class="src src-emacs-lisp">\n  (let ((greeting "hello, world")\n        (name :spacecat)\n        (food :candybar))\n    (insert (format "%s! I am %s and I eat %s" greeting name food)))</p><p></code></p><p></p>'
+                assert.equal('<h2 class="section-number-2 tag tag-sourceCode" >source code</h2><p>\n<code class="src src-emacs-lisp" data-language="emacs-lisp">\n  (let ((greeting "hello, world")\n        (name :spacecat)\n        (food :candybar))\n    (insert (format "%s! I am %s and I eat %s" greeting name food)))</p><p></code></p><p></p>'
                              ,sc.toHtml());
                 
             },
