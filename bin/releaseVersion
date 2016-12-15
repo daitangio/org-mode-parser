@@ -3,18 +3,16 @@
 # Syntax:
 # bin/releaseVersion [push]
 # Without publish only checks
-set -e -x
+set -e
 binDir=$(dirname $0)
 tagVersion=$($binDir/findOutDeployTag $binDir/../README.org)
 #echo $tagVersion
 $(dirname $0)/installationTest || exit 1000
 echo Check: declared version
-# "version": "0.1.1",
 grep version package.json
-exit
 echo Check the status
-git commit  --dry-run -a -m "Riepilogo" || echo ""
-#git status
+git commit  --dry-run -a -m "Riepilogo" || echo "Dry run failed: uncommited changes"
+##? vows --spec -v --cover-plain  test/*.js
 if [ "$1" == "push" ]; then
     read -e  -p 'Proceed (y/n)?' -i y reply
     test "$reply" != "y"  && exit
