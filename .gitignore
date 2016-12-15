@@ -4,3 +4,5 @@ node_modules
 setup.sh
 obj/
 bin/Microsoft.NodejsTools.WebRole.dll
+renderTest.html
+.vs/

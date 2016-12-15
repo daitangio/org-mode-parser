@@ -9,3 +9,7 @@ OrgMode Parser major contributors:
 7. nomosyn 
 8. thesebas
 
+
+
+For a nice view see
+https://github.com/daitangio/org-mode-parser/graphs/contributors
