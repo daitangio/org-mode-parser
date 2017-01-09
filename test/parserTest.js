@@ -673,7 +673,8 @@ vows.describe('OrgMode BUGS').addBatch({
 // 		// assert.isTrue(subtree.length>5);    
 // 		// //console.dir(subtree);
 // 	    }); 	 
-//      },
+//      }
+
 //      'OrgQuery API improvements /2': {
 // 	topic: function(){
 // 	    var myCallback=this.callback;
