@@ -1,8 +1,7 @@
 var vows = require('vows'),
     assert = require('assert'),
     _=require("underscore"),
-    util=require('util'),
-    qc = require("quickcheck");
+    util=require('util');
 
 var orgParser=require("../lib/org-mode-parser");
 
@@ -21,11 +20,21 @@ vows.describe('OrgMode Html plugin').addBatch({
                 assert.equal('<h1 class="section-number-1" >Very Stupid</h1><p>Data Line1</p><p></p>',n.toHtml());
             }
         },
+        
         'toHtml testing': {
             topic: function () {
-                orgParser.makelist("./test/htmlTest.org", this.callback);
+                var that = this;
+                // Callback issue see
+                // https://github.com/vowsjs/vows/issues/187
+                orgParser.makelist("./test/htmlTest.org", function(n) {
+                    that.callback(null,n);
+                });
             },
-            'begin_src test': function (n, unused) {
+            'buf':function(n){
+            },
+            'begin_src test': function (n) {
+                console.log("JUST HERE");
+                console.log("n="+n);
                 var q = new orgParser.OrgQuery(n);
                 var sc=q.selectTag("sourceCode");
                 //console.dir(sc);
@@ -35,28 +44,24 @@ vows.describe('OrgMode Html plugin').addBatch({
                              ,sc.toHtml());
                 
             },
-            'css tag':function(n,unused){
+            'css tag':function(n){
                 var q = new orgParser.OrgQuery(n);
                 assert.equal('<h1 class="section-number-1 tag tag-tagTest1" >Tag test</h1><p>Simple tag test\n</p>',
                              q.selectTag("tagTest1").toHtml());
             },
 
-            'css todo and tag':function(n,unused){
+            'css todo and tag':function(n){
                 var q = new orgParser.OrgQuery(n);
                 assert.equal('<h1 class="section-number-1 todo todo-TODO tag tag-tagTest2" >Tag master and TODO Test</h1><p>This node test the TODO and tag css class.\n</p>',
                              q.selectTag("tagTest2").toHtml());
             },
-            'full rendering':function(n,unused){
+            'full rendering':function(n){
                 var fs=require("fs");
                 fs.writeFileSync( "./renderTest.html", (new orgParser.OrgQuery(n)).toHtml({
                     fullHtml:true,
                     jadeTemplatePath:"./test/fullHtml.jade"
                 }));
-            }
-            
-            
-            
-
+            }            
         }
 
     }

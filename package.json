@@ -9,11 +9,11 @@
     "orgmode",
     "emacs"
   ],
-  "license":"GPL-2.0",
+  "license": "GPL-2.0",
   "author": "Giovanni Giorgi <jj@gioorgi.com>",
   "contributors": [],
   "main": "./lib/org-mode-parser",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "directories": {
     "test": "./test"
   },
@@ -25,14 +25,14 @@
     "url": "git://github.com/daitangio/org-mode-parser.git"
   },
   "engines": {
-    "node": ">=4.1.2"
+    "node": ">=6.9.2"
   },
   "dependencies": {
     "jade": "^1.11.0",
     "underscore": ">=1.1.7"
   },
   "devDependencies": {
-    "vows": "^0.7.0",
-    "quickcheck": "0.0.4"
+      "vows": "^0.7.0",
+      "quickcheck": "0.0.4"
   }
 }
