@@ -633,67 +633,68 @@ vows.describe('OrgMode BUGS').addBatch({
 }).export(module);
 
 //test/tableTest.org
-vows.describe('OrgMode 0.0.7').addBatch({
 
- 'OrgQuery API improvements /1i':{
+// vows.describe('OrgMode 0.0.7').addBatch({
+
+//  'OrgQuery API improvements /1':{
      
-     'You cannot push undefined to OrgQuery':function (){
+//      'You cannot push undefined to OrgQuery':function (){
 	 
-	 assert.throws(function(){
-			   new orgParser.OrgQuery(undefined);
-		       },orgParser.IllegalArgumentException);
-     },
-     'You cannot fool selectSubtree /1 with wrong input-types':function(){
+// 	 assert.throws(function(){
+// 			   new orgParser.OrgQuery(undefined);
+// 		       },orgParser.IllegalArgumentException);
+//      },
+//      'You cannot fool selectSubtree /1 with wrong input-types':function(){
 
-	 assert.throws(function(){
-			   new orgParser.OrgQuery([]).selectSubtree([]);
-		       },orgParser.IllegalArgumentException);
+// 	 assert.throws(function(){
+// 			   new orgParser.OrgQuery([]).selectSubtree([]);
+// 		       },orgParser.IllegalArgumentException);
 
 	     
-     },
-     'SelectSubtree Work nicely':function(){
+//      },
+//      'SelectSubtree Work nicely':function(){
 
-	 orgParser.makelist("./README.org", function (nl){
-	     var q=new orgParser.OrgQuery(nl);
-	     var subtree=q.selectSubtree(q.selectTag('releaseNotes').first());
-	     //console.dir(subtree);
-	     assert.isTrue(subtree.length>1);    
-	 });
-     },
-     'Subtree will work with 1-sized collection as input':function(){
-	    orgParser.makelist("./README.org", function (nl){
-		var q=new orgParser.OrgQuery(nl);
-		var rn=q.selectTag('releaseNotes');
-		assert.equal(rn.length,1);
-		var subtree=q.selectSubtree(rn);
-		assert.isTrue(subtree.length>5);  
-		// var subtree=q.selectSubtree(q.selectTag('releaseNotes'));
-		// assert.isFalse(_.isUndefined(subtree) && _.isNull(subtree));
-		// assert.isTrue(subtree.length>5);    
-		// //console.dir(subtree);
-	    }); 	 
-     },
-     'OrgQuery API improvements /2': {
-	topic: function(){
-	    var myCallback=this.callback;
-	    orgParser.makelist("./test/orgmodeTest.org", function (nl){
-		    myCallback(new orgParser.OrgQuery(nl),nl);
-	    });
-	},	 
-	 'q.selectSubtree(emptyNodeList) === q.selectSubtree() === q':function(q,n){
-	     var bastardEmptyQuery=q.selectTag('nonExistent');
-	     assert.equal(bastardEmptyQuery.length,0);
-	     var resultOfABadMix=q.selectSubtree(bastardEmptyQuery);
-	     assert.equal(resultOfABadMix.length, q.length);
-	 },
-	 'Subtree will throw error on more then one elments collections as input':function(q,n){
-	     assert.throws(function(){q.selectSubtree(q); }, orgParser.llegalArgumentException);
-	 }
-     }
+// 	 orgParser.makelist("./README.org", function (nl){
+// 	     var q=new orgParser.OrgQuery(nl);
+// 	     var subtree=q.selectSubtree(q.selectTag('releaseNotes').first());
+// 	     //console.dir(subtree);
+// 	     assert.isTrue(subtree.length>1);    
+// 	 });
+//      },
+//      'Subtree will work with 1-sized collection as input':function(){
+// 	    orgParser.makelist("./README.org", function (nl){
+// 		var q=new orgParser.OrgQuery(nl);
+// 		var rn=q.selectTag('releaseNotes');
+// 		assert.equal(rn.length,1);
+// 		var subtree=q.selectSubtree(rn);
+// 		assert.isTrue(subtree.length>5);  
+// 		// var subtree=q.selectSubtree(q.selectTag('releaseNotes'));
+// 		// assert.isFalse(_.isUndefined(subtree) && _.isNull(subtree));
+// 		// assert.isTrue(subtree.length>5);    
+// 		// //console.dir(subtree);
+// 	    }); 	 
+//      },
+//      'OrgQuery API improvements /2': {
+// 	topic: function(){
+// 	    var myCallback=this.callback;
+// 	    orgParser.makelist("./test/orgmodeTest.org", function (nl){
+// 		    myCallback(new orgParser.OrgQuery(nl),nl);
+// 	    });
+// 	},	 
+// 	 'q.selectSubtree(emptyNodeList) === q.selectSubtree() === q':function(q,n){
+// 	     var bastardEmptyQuery=q.selectTag('nonExistent');
+// 	     assert.equal(bastardEmptyQuery.length,0);
+// 	     var resultOfABadMix=q.selectSubtree(bastardEmptyQuery);
+// 	     assert.equal(resultOfABadMix.length, q.length);
+// 	 },
+// 	 'Subtree will throw error on more then one elments collections as input':function(q,n){
+// 	     assert.throws(function(){q.selectSubtree(q); }, orgParser.llegalArgumentException);
+// 	 }
+//      }
      
-} //Refining Subtree api
+// } //Refining Subtree api
 	
-}).export(module);
+// }).export(module);
 
 vows.describe('OrgMode 0.0.5').addBatch({
 
