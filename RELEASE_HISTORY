@@ -1,0 +1,127 @@
+# -*- mode: org ; mode: visual-line; -*- -*
+
+* RELEASE NOTES :releaseNotes:
+** ORG_MODE_PARSER_0.1.3                                                :dev:
+Code name: Beauty
+
+
+** ORG_MODE_PARSER_0.1.2                                                :published:
+Code name: Tetzuya
+
++ Simple html rendering engine. 
+  Jade is an optional requirement if you want to use it as template
+  engine.  
+  It is required on-demand. 
+  Anyway we suggest to install it 
++ Support for source block #+begin_src / #+end_src
++ Quickcheck for stronger unit test (only embrional setup)
++ Fixes by contributors:
+  1) Support for closed timestamp (thesebas/feature/closed-timestamp)
+  2) data-language addition (by guozhen)
+  3) [fix] don't parse lien when processing source code (by guozhen)
+  4) Style/language pass on README.org (by aviav)
+  5) fix typo in README.org (by kevzettler)
+  6) fix up tortureTest to not crash the parser in the malformed
+     property drawer (by natto)
+  7)  Merge branch 'client-side-rendering' into api/extension
+      (giorgi + natto)
++ Nodejs 4.x+ required (do not tested below, should work anyway)
++ Added CONTTRIB file
+
+Potential break-change:
+Now unknown directive are *retained*
+
+** ORG_MODE_PARSER_0.1.1                                                :published:
+Republish (0.1.0  never see light)
+** ORG_MODE_PARSER_0.1.0                                          :published:
++ Visual Studio 2015 compatibility
++ Tested on node v0.12.2
+** ORG_MODE_PARSER_0.0.9 						:published:
++ API Change: IllegalArgumentException and ParseError disappears. They are replaced with simple Error object
+  because in node 0.10.x the toString() of the old objects was wrong.
+  /Parsing error are targeted to human beings, so avoid trapping them
+  for complex recovery puropse/
+** ORG_MODE_PARSER_0.0.8 						:published:
++ Added the examples/site-publisher example
++ Tested against latest node version
++ Removed direct dependecy from vows, only used for testing
+** ORG_MODE_PARSER_0.0.7						:published:
+*** Stringent selectSubtree API (BUGFIX).
+anOrgQuery.selectSubtree(i)  now will accept only these types of i objects:
+ + A Orgnode
+ + A 1-size OrgQuery collection
+ + empty/null
+
+/Keep in mind the following rule for understanding the behavior:/
+
+q.selectSubtree(emptyNodeList) === q.selectSubtree(null) == q.selectSubtree() === q
+
+which is a bit naif, but it will not break the existing API.
+
+*** Magic avoided
+Evaluted the option of omitting first() on mono results, but API gets dirty. 
+For play with it, see commit tag dev_orgquery_one_node_merge  (6dd58da5e3a90e3f651bba4949cbe7b95155bc6b)
+and serch for the use of the "mergeFrom" method, now disabled.
+
+** ORG_MODE_PARSER_0.0.6					  :published:
+Minor documentation fixes
+
+** ORG_MODE_PARSER_0.0.5					  :published:
+1. Addedd support for generic :DRAWER: syntax
+2. Archive tag is supported
+Missed:
++ links/ Footnotes  are still completly missed
++ Ordered/Bulletin list are still missed, 
+  but org-mode will present it in a nice way anyway
+
+** ORG_MODE_PARSER_0.0.4 :published:
+ 1) Added new OrgQuery methods: 
+    1. sortBy
+    2. reject
+    3. toArray
+    4. each
+ 2) :PROPERTIES: without :END: generates an error now.
+    The parser is quite weak, but can detect this simple case.
+BUGFIXES:
+ + OrgQuery had a bug, and collected nodes could not be unique in some rare situations.
+   Now we relay on underscore library for generating unique id
+ + Added a set of stronger guards on constructors
+   
+** ORG_MODE_PARSER_0.0.3   :published:
+  1) Added the ability to regenerate the Orgnode as string using the method
+     toOrgString()
+     Be carefully, the method is still experimental and do not emit:
+      a) Comments
+      b) SCHEDULE,DEADLINE and CLOCK directive
+  2) Added the OrgQuery object, for doing queries like 
+     + subtree extraction with .selectSubtree
+     + tag-based searches with selectTag   
+Even if the OrgQuery try to play nice, it is not yet an array, so
+avoid using it directly with _.each(...)
+
+
+*** KNOWN LIMITATIONS
+  1) Comments are stripped off during parsing.
+  2) Special directive starting with '#+' are mostly ignored during the parsing, 
+     for instance #+AUTHOR etc
+  3) Tables are not parsed at all. 
+  4) In org-mode tags cannot have "-" character in name. They are split in subwords. 
+     The parser allow this instead, so be careful when editing by hand org files.
+  5) properties can have "-" but this will force 
+     you to access them with the array syntax instead of the dot notation, so we
+     strongly suggest to avoid "-" and special java character in property names.
+     Relay on "_", for instance.
+
+** ORG_MODE_PARSER_0.0.2 					  :published:
+  1) SCHEDULE,DEADLINE and CLOCK directives now are correctly parsed
+  2) Added a performance watchdog to track slowdowns
+  3) Added the ability to return performance data via makelist
+  4) Started restructuring parser for better performance.
+  5) Minor API Change: null is the default value for tag,priority,scheduled, deadline 
+     when not set.
+     e.tags.existingtag is true if existingtag is there.
+     Anyway is better to use 
+       "existingtag" in e.tags
+     which is a better syntax
+** ORG_MODE_PARSER_0.0.1					  :published:
+First revision
