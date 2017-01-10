@@ -12,7 +12,7 @@
 
    It is also _XML-free_ and yes, we like it  :)
 ** What are further benefits?
-   A lot of unit testing (over 90) and a pretty fast parser (see
+   A lot of unit testing (over 100) and a pretty fast parser (see
    below).  Also, it has minimal requirements.
 ** Where can I find more news?
    Take a look at http://gioorgi.com/tag/org-mode-parser/ for latest
@@ -153,6 +153,7 @@ NODE_PATH=$(dirname $(which node))/../lib/node_modules:. ./bin/testme
 Fixing a known bug on vows which is creating false positive on tests
 https://github.com/vowsjs/vows/issues/187
 
-
 "vows":">=0.5.11" worked, then an incompatibile change was made on
 vows
+
+Fixes #11 nodelist does not include headers with no text

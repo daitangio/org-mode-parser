@@ -801,3 +801,23 @@ vows.describe('OrgMode 0.0.5').addBatch({
 
 
 }).export(module);
+
+vows.describe('OrgMode API Bugs').addBatch({
+    'Issue':{
+        '2017': {
+            topic: function (){
+                //orgParser.enableDebug();
+	        orgParser.makelist("./test/issue11-empty-head.org",this.callback);
+            },
+	    'empty header is here':function(n,unused){
+                console.dir(n[1]);
+                assert.equal(n.length,3 /*expected*/);                
+	    },
+            'emptyheader is empty':function(n,unused){
+                console.dir(n[1]);
+                assert.equal(n[1].headline," ");
+	    }
+            
+        }
+    }
+}).export(module);
