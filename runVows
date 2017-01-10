@@ -1,7 +1,8 @@
 #!/bin/bash
 # nodemon $0
 # export  NODE_PATH=$(dirname $(which node))/../lib/node_modules
-vows --spec -v --cover-plain  test/*.js
+#vows --spec -v --cover-plain  test/*.js
+vows    test/*.js
 # GG The watch mode seems quite broken
 # while sleep 0 ; do
 #     npm install

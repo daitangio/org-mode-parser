@@ -30,11 +30,9 @@ vows.describe('OrgMode Html plugin').addBatch({
                     that.callback(null,n);
                 });
             },
-            'buf':function(n){
-            },
             'begin_src test': function (n) {
-                console.log("JUST HERE");
-                console.log("n="+n);
+                //console.log("JUST HERE");
+                //console.dir(n);
                 var q = new orgParser.OrgQuery(n);
                 var sc=q.selectTag("sourceCode");
                 //console.dir(sc);
@@ -61,6 +59,7 @@ vows.describe('OrgMode Html plugin').addBatch({
                     fullHtml:true,
                     jadeTemplatePath:"./test/fullHtml.jade"
                 }));
+                
             }            
         }
 

@@ -803,21 +803,37 @@ vows.describe('OrgMode 0.0.5').addBatch({
 }).export(module);
 
 vows.describe('OrgMode API Bugs').addBatch({
-    'Issue':{
-        '2017': {
+    '2017':{
+        'Issue11': {
             topic: function (){
                 //orgParser.enableDebug();
 	        orgParser.makelist("./test/issue11-empty-head.org",this.callback);
             },
 	    'empty header is here':function(n,unused){
-                console.dir(n[1]);
+                //console.dir(n[1]);
                 assert.equal(n.length,3 /*expected*/);                
 	    },
             'emptyheader is empty':function(n,unused){
-                console.dir(n[1]);
+                //console.dir(n[1]);
                 assert.equal(n[1].headline," ");
-	    }
+	    },
+            'body is not': function(n,unused){
+                assert.equal(n[1].body, "Empty header above");
+            }
             
         }
+        /** GG Eval if it is needed:
+        ,'No header body trouble': {
+            topic: function (){
+                //orgParser.enableDebug();
+	        orgParser.makelist("./test/no-header.org",this.callback);
+            },
+	    'empty header is here':function(n,unused){
+                console.dir(n);
+                assert.equal(n[0].headline, " ");
+                assert.equal(n.length,2);                
+	    }
+        }*/
+
     }
 }).export(module);
