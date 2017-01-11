@@ -71,6 +71,7 @@ org.makelist("README.org", function (nodelist){
     Extract a random element
   + toHtml(options)
     Generate a fair html rendering.
+    It also support pug (jade) template system.
     This code is not meant to replace org-mode export functionality,
     but can be an handy friend.
     For usage example see
@@ -78,9 +79,14 @@ org.makelist("README.org", function (nodelist){
 
   See the unit test section 'basicLibraries OrgQuery-Complex' on
   test/parseTest.js for more usage examples, and do not miss the [[FAQ]]
-** Known Defects?
+** Known Limitations
    The input must be a well-formed org-mode file.  Parser can detect some
    corruptions, but it does not provide a complete sanity check.
+
+   Every test must have a header. 
+   Parser does not support "no-headed" texts
+   Anyway, empty header are supported (see github Issue #11)
+
 * Design Goals
 ** API Stability
    In general, every API component described in the [[API]] section is

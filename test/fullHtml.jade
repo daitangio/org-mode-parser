@@ -1,2 +1,16 @@
 doctype html
 html(lang="en")
+  p Example of expansion of header of #{nodes.length} nodes
+  p Index
+  ol
+    each n in nodes
+      li
+        a(href='#'+n.headline) 
+          span= n.headline
+  p Body
+  ol
+    each n in nodes
+     li 
+       a(name='' + n.headline)= n.headline      
+       p Body for this node:
+        p= n.body

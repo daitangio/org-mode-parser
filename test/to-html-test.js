@@ -57,7 +57,7 @@ vows.describe('OrgMode Html plugin').addBatch({
                 var fs=require("fs");
                 fs.writeFileSync( "./renderTest.html", (new orgParser.OrgQuery(n)).toHtml({
                     fullHtml:true,
-                    jadeTemplatePath:"./test/fullHtml.jade"
+                    pugTemplatePath:"./test/fullHtml.jade"
                 }));
                 
             }            

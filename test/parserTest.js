@@ -817,9 +817,9 @@ vows.describe('OrgMode API Bugs').addBatch({
                 //console.dir(n[1]);
                 assert.equal(n[1].headline," ");
 	    },
-            'body is not': function(n,unused){
-                assert.equal(n[1].body, "Empty header above");
-            }
+            // 'body is not': function(n,unused){
+            //     assert.equal(n[1].body, "Empty header above");
+            // }
             
         }
         /** GG Eval if it is needed:

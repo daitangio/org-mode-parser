@@ -29,10 +29,11 @@
   },
   "dependencies": {
     "jade": "^1.11.0",
+    "pug": "^2.0.0-beta6",
     "underscore": ">=1.1.7"
   },
   "devDependencies": {
-      "vows": "^0.5.11",
-      "quickcheck": "0.0.4"
+    "vows": "^0.5.11",
+    "quickcheck": "0.0.4"
   }
 }
