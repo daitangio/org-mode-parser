@@ -28,7 +28,6 @@
     "node": ">=6.9.2"
   },
   "dependencies": {
-    "jade": "^1.11.0",
     "pug": "^2.0.0-beta6",
     "underscore": ">=1.1.7"
   },
