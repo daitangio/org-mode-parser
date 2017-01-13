@@ -13,7 +13,7 @@ https://github.com/Microsoft/nodejstools/
 1. Download NodeJS (64bit suggested)
 2. Install the dependencies GLOBALLY:
 
-	npm  install -g vows@0.7.0
+	npm  install -g vows@0.8.1
 	npm  install -g underscore@1.8.3
 		
 4. run the test via the runVowsTest.cmd
