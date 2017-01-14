@@ -28,12 +28,11 @@
     "node": ">=6.9.2"
   },
   "dependencies": {
-    "pug": "^2.0.0-beta6",
+    "pug": "^2.0.0-beta6",    
     "underscore": "^1.8.3",
     "winston": "^2.3.0"
   },
   "devDependencies": {
-    "quickcheck": "0.0.4",
     "vows": "^0.8.1"
   }
 }
