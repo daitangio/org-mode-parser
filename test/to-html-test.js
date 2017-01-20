@@ -14,7 +14,6 @@ var orgParser=require("../lib/org-mode-parser");
 vows.describe('OrgMode Html plugin').addBatch({
     'basicLibraries':{
         'html':{
-            // Very stupid, only for getting quickcheck on track
             'vanilla':function() {
                 var n=new orgParser.OrgQuery(orgParser.parseBigString("* Very Stupid\nData Line1\n"));		
                 assert.equal('<h1 class="section-number-1" >Very Stupid</h1><p>Data Line1</p><p></p>',n.toHtml());

@@ -1,8 +1,7 @@
 var vows = require('vows'),
     assert = require('assert'),
     _=require("underscore"),
-    util=require('util'),
-    qc = require("quickcheck");
+    util=require('util');
 
 var orgParser=require("../lib/org-mode-parser");
 
@@ -13,6 +12,7 @@ var orgParser=require("../lib/org-mode-parser");
 // Create a Test Suite
 vows.describe('OrgMode Tests').addBatch({
     'basicLibraries':{
+        /*
         'quickcheck1':{
             // Very stupid, only for getting quickcheck on track
             'qc1':function() {
@@ -25,7 +25,7 @@ vows.describe('OrgMode Tests').addBatch({
                 // Check a bunch of random strings...
                 assert.equal(true,qc.forAll(randomParser,qc.arbString));
             }
-        },
+        },*/
 	'meta-example':{
 	    'binding':function(){
 		var f=function(){return this;};
