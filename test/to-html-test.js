@@ -25,11 +25,10 @@ vows.describe('OrgMode Html plugin').addBatch({
                 var that = this;
                 // Callback issue see
                 // https://github.com/vowsjs/vows/issues/187
-                orgParser.makelist("./test/htmlTest.org", function(n) {
-                    that.callback(null,n);
-                });
+                orgParser.makelistNode("./test/htmlTest.org", that.callback );
+                
             },
-            'begin_src test': function (n) {
+    'begin_src test': function (err,n) {
                 //console.log("JUST HERE");
                 //console.dir(n);
                 var q = new orgParser.OrgQuery(n);
@@ -41,18 +40,18 @@ vows.describe('OrgMode Html plugin').addBatch({
                              ,sc.toHtml());
                 
             },
-            'css tag':function(n){
+            'css tag':function(err,n){
                 var q = new orgParser.OrgQuery(n);
                 assert.equal('<h1 class="section-number-1 tag tag-tagTest1" >Tag test</h1><p>Simple tag test\n</p>',
                              q.selectTag("tagTest1").toHtml());
             },
 
-            'css todo and tag':function(n){
+            'css todo and tag':function(err,n){
                 var q = new orgParser.OrgQuery(n);
                 assert.equal('<h1 class="section-number-1 todo todo-TODO tag tag-tagTest2" >Tag master and TODO Test</h1><p>This node test the TODO and tag css class.\n</p>',
                              q.selectTag("tagTest2").toHtml());
             },
-            'full rendering':function(n){
+            'full rendering':function(err, n){
                 var fs=require("fs");
                 fs.writeFileSync( "./renderTest.html", (new orgParser.OrgQuery(n)).toHtml({
                     fullHtml:true,

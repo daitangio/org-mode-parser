@@ -6,3 +6,5 @@ obj/
 bin/Microsoft.NodejsTools.WebRole.dll
 renderTest.html
 .vs/
+org-parser-debug.log
+npm-debug.log

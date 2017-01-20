@@ -3,13 +3,20 @@
 * RELEASE NOTES :releaseNotes:
 ** ORG_MODE_PARSER_0.1.3                                                :dev:
 Code name: Beauty
-Still in developement 
-Planned stuff:
 
 + Fixed empty header issue
 + Code Cleanup
 + Fixed vows bugs, unit tests works flawless
 + Migration from jade to pug2 (new name of jade)
++ Added optional logging framework (winston)
++ Startd evaluting integration with
+https://github.com/mooz/org-js/
+
+*** KNOWN MINOR PROBLEMS
+On Node 7.x  vows 0.8 fails on some tests (to-html tests). Anyway it seems only a
+a problem of unit testing. 
+
+
 
 ** ORG_MODE_PARSER_0.1.2                                                :published:
 Code name: Tetzuya
