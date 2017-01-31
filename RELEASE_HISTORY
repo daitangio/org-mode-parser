@@ -1,7 +1,9 @@
 # -*- mode: org ; mode: visual-line; -*- -*
 
 * RELEASE NOTES :releaseNotes:
-** ORG_MODE_PARSER_0.1.3                                                :published:
+** ORG_MODE_PARSER_0.1.4
+Code name: Reika
+** ORG_MODE_PARSER_0.1.3                                                
 Code name: Beauty
 
 + Fixed empty header issue
@@ -18,7 +20,7 @@ a problem of unit testing.
 
 
 
-** ORG_MODE_PARSER_0.1.2                                                :published:
+** ORG_MODE_PARSER_0.1.2                                                
 Code name: Tetzuya
 
 + Simple html rendering engine. 
@@ -44,21 +46,21 @@ Code name: Tetzuya
 Potential break-change:
 Now unknown directive are *retained*
 
-** ORG_MODE_PARSER_0.1.1                                                :published:
+** ORG_MODE_PARSER_0.1.1                                                
 Republish (0.1.0  never see light)
-** ORG_MODE_PARSER_0.1.0                                          :published:
+** ORG_MODE_PARSER_0.1.0                                          
 + Visual Studio 2015 compatibility
 + Tested on node v0.12.2
-** ORG_MODE_PARSER_0.0.9 						:published:
+** ORG_MODE_PARSER_0.0.9 						
 + API Change: IllegalArgumentException and ParseError disappears. They are replaced with simple Error object
   because in node 0.10.x the toString() of the old objects was wrong.
   /Parsing error are targeted to human beings, so avoid trapping them
   for complex recovery puropse/
-** ORG_MODE_PARSER_0.0.8 						:published:
+** ORG_MODE_PARSER_0.0.8 						
 + Added the examples/site-publisher example
 + Tested against latest node version
 + Removed direct dependecy from vows, only used for testing
-** ORG_MODE_PARSER_0.0.7						:published:
+** ORG_MODE_PARSER_0.0.7						
 *** Stringent selectSubtree API (BUGFIX).
 anOrgQuery.selectSubtree(i)  now will accept only these types of i objects:
  + A Orgnode
@@ -76,10 +78,10 @@ Evaluted the option of omitting first() on mono results, but API gets dirty.
 For play with it, see commit tag dev_orgquery_one_node_merge  (6dd58da5e3a90e3f651bba4949cbe7b95155bc6b)
 and serch for the use of the "mergeFrom" method, now disabled.
 
-** ORG_MODE_PARSER_0.0.6					  :published:
+** ORG_MODE_PARSER_0.0.6					  
 Minor documentation fixes
 
-** ORG_MODE_PARSER_0.0.5					  :published:
+** ORG_MODE_PARSER_0.0.5					  
 1. Addedd support for generic :DRAWER: syntax
 2. Archive tag is supported
 Missed:
@@ -87,7 +89,7 @@ Missed:
 + Ordered/Bulletin list are still missed, 
   but org-mode will present it in a nice way anyway
 
-** ORG_MODE_PARSER_0.0.4 :published:
+** ORG_MODE_PARSER_0.0.4 
  1) Added new OrgQuery methods: 
     1. sortBy
     2. reject
@@ -100,7 +102,7 @@ BUGFIXES:
    Now we relay on underscore library for generating unique id
  + Added a set of stronger guards on constructors
    
-** ORG_MODE_PARSER_0.0.3   :published:
+** ORG_MODE_PARSER_0.0.3   
   1) Added the ability to regenerate the Orgnode as string using the method
      toOrgString()
      Be carefully, the method is still experimental and do not emit:
@@ -124,8 +126,8 @@ avoid using it directly with _.each(...)
      you to access them with the array syntax instead of the dot notation, so we
      strongly suggest to avoid "-" and special java character in property names.
      Relay on "_", for instance.
-
-** ORG_MODE_PARSER_0.0.2 					  :published:
+     
+** ORG_MODE_PARSER_0.0.2 					  
   1) SCHEDULE,DEADLINE and CLOCK directives now are correctly parsed
   2) Added a performance watchdog to track slowdowns
   3) Added the ability to return performance data via makelist
@@ -136,5 +138,5 @@ avoid using it directly with _.each(...)
      Anyway is better to use 
        "existingtag" in e.tags
      which is a better syntax
-** ORG_MODE_PARSER_0.0.1					  :published:
+** ORG_MODE_PARSER_0.0.1					  
 First revision

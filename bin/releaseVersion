@@ -1,17 +1,18 @@
 #!/bin/bash
 # Internal housekeeping only
+# RESEE DOES NOT WORK VERY WELL
 # Syntax:
 # bin/releaseVersion [push]
 # Without publish only checks
 set -e -u
 binDir=$(dirname $0)
 tagVersion=$( grep version $binDir/../package.json | cut -d \" -f 4 )
-#tagVersion=$($binDir/findOutDeployTag $binDir/../README.org)
 echo Ready for release $tagVersion
 echo Check the status
-git commit  --dry-run -a -m "Riepilogo" ||  exit 2000 
+#git commit  --dry-run -a -m "Riepilogo" ||  exit 2000 
 vows --spec -v --cover-plain  test/*.js
 $(dirname $0)/installationTest || exit 1000
+set +u
 if [ "$1" == "push" ]; then
     read -e  -p 'Proceed (y/n)?' -i y reply
     test "$reply" != "y"  && exit
