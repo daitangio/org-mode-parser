@@ -1,7 +1,7 @@
 # -*- mode: org ; mode: visual-line; -*- -*
 
 * RELEASE NOTES :releaseNotes:
-** ORG_MODE_PARSER_0.1.3                                                :dev:
+** ORG_MODE_PARSER_0.1.3                                                :published:
 Code name: Beauty
 
 + Fixed empty header issue
