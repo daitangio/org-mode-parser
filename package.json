@@ -9,7 +9,7 @@
     "orgmode",
     "emacs"
   ],
-  "license": "GPL-2.0",
+  "license": "MIT",
   "author": "Giovanni Giorgi <jj@gioorgi.com>",
   "contributors": [],
   "main": "./lib/org-mode-parser",
