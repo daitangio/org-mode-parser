@@ -1,3 +1,10 @@
+* 2017 Contributors
+1. Jinwoo Lee "Create Date objects with correct months"
+2. Ben Miller "create makelistSync function"
+3. Eric Doughty-Papassideris "tolerate whitespace after drawer block
+   start"
+
+
 * 2016 Contributors
 OrgMode Parser major contributors:
 1. aviav
