@@ -837,3 +837,19 @@ vows.describe('OrgMode API Bugs').addBatch({
 
     }
 }).export(module);
+
+vows.describe('OrgMode Reika').addBatch({
+    '2018':{
+        'INCLUDE works': {
+            topic: function (){
+                //orgParser.enableDebug();
+	        orgParser.makelist("./test/includeTest.org",this.callback);
+            },
+	    'IncludeWorks_basic':function(n,unused){
+                //console.dir(n[1]);
+                assert.equal(n.length,3 /*expected*/);                
+	    },
+            
+        }
+    }
+}).export(module);

@@ -1,0 +1,13 @@
+* Include files
+
+Include other files during export. For example, to include your .emacs file, you could use:
+
+#+INCLUDE: "./orgmodeTest.org" src emacs-lisp
+The first parameter is the file name to include. The optional second parameter specifies the block type: ‘example’, ‘export’ or p‘src’). The option third parameter specifies the source code language to use for formatting the contents. This is relevant to both ‘export’ and ‘src’ block types.
+
+If an include file is specified as having a markup language, Org neither checks for valid syntax nor changes the contents in any way. For ‘example’ and ‘src’ blocks, Org code-escapes the contents before inclusion.
+
+Unsupported:
+#+INCLUDE: "~/my-book/chapter2.org" :minlevel 1
+#+INCLUDE: "~/.emacs" :lines "5-10"   
+^^^^^ Include lines 5 to 10, 10 excluded
