@@ -1,0 +1,8 @@
+****** Feature: create and register new wordpress-powered (source) jekyll blog :toblog:
+       yaya, cool
+       markdown here
+if the headline has a : in it, it will confuse the parser and it will think the headline is actually a tag.
+
+
+* Simple tag :simple:
+* Simple tag double :one:double:

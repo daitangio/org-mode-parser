@@ -794,6 +794,7 @@ vows.describe('OrgMode 0.0.5').addBatch({
 		},
 		'parsing works':function(nodes,u){	
 			// Expected one master node
+			//console.dir(nodes);
 			assert.isNotNull(nodes);			
 			//assert.equal(1,nodes.length);
 		}
@@ -838,18 +839,37 @@ vows.describe('OrgMode API Bugs').addBatch({
     }
 }).export(module);
 
-vows.describe('OrgMode Reika').addBatch({
+vows.describe('Bug Fix 2018').addBatch({
     '2018':{
-        'INCLUDE works': {
+        'colon mistake works': {
             topic: function (){
-                //orgParser.enableDebug();
-	        orgParser.makelist("./test/includeTest.org",this.callback);
+                orgParser.enableDebug();
+				orgParser.makelist("./test/colon_mistake.org",this.callback);
+				//orgParser.disableDebug();
             },
-	    'IncludeWorks_basic':function(n,unused){
-                //console.dir(n[1]);
-                assert.equal(n.length,3 /*expected*/);                
+	    'Tag detection':function(n,unused){
+				(n[0]);		
+				assert.equal(n[0].tags["toblog"],true);
+                //assert.equal(n.length,1 /*expected*/);                
 	    },
             
         }
     }
 }).export(module);
+
+
+// vows.describe('OrgMode Reika').addBatch({
+//     '2018':{
+//         'INCLUDE works': {
+//             topic: function (){
+//                 //orgParser.enableDebug();
+// 	        orgParser.makelist("./test/includeTest.org",this.callback);
+//             },
+// 	    'IncludeWorks_basic':function(n,unused){
+//                 //console.dir(n[1]);
+//                 assert.equal(n.length,3 /*expected*/);                
+// 	    },
+            
+//         }
+//     }
+// }).export(module);
