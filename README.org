@@ -83,9 +83,9 @@ org.makelist("README.org", function (nodelist){
    The input must be a well-formed org-mode file.  Parser can detect some
    corruptions, but it does not provide a complete sanity check.
 
-   Every test must have a header. 
-   Parser does not support "no-headed" texts
-   Anyway, empty header are supported (see github Issue #11)
+   Every text must have a header.
+   Parser does not support "no-headed" inputs.
+   Anyway, empty headers are supported (see github Issue #11)
 
 * Design Goals
 ** API Stability
