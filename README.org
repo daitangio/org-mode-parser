@@ -15,7 +15,7 @@
    A lot of unit testing (over 100) and a pretty fast parser (see
    below).  Also, it has minimal requirements.
 ** Where can I find more news?
-   Take a look at http://gioorgi.com/tag/org-mode-parser/ for latest
+   Take a look at https://gioorgi.com/categories/org-mode-parser/ for latest
    news
 ** Installation
    The full installation can be obtained via the npm package
