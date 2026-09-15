@@ -1,7 +1,7 @@
 {
   "name": "org-mode-parser",
   "description": "A parser for the Emacs org-mode package. DRAWER and archive tag supported. Stronger API",
-  "homepage": "http://gioorgi.com/org-mode-parser",
+  "homepage": "https://gioorgi.com/categories/org-mode-parser/",
   "keywords": [
     "parser",
     "util",
